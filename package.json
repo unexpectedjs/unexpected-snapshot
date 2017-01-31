@@ -1,0 +1,23 @@
+{
+  "name": "fixpect",
+  "version": "0.1.0-pre",
+  "description": "",
+  "main": "lib/fixpect.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Andreas Lind <andreas@one.com>",
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "callsite": "^1.0.0",
+    "eslint": "~3.14.1",
+    "espree": "^3.3.2",
+    "memoizesync": "^0.5.0"
+  },
+  "devDependencies": {
+    "unexpected": "10.23.0"
+  },
+  "peerDependencies": {
+    "unexpected": "^10.23.0"
+  }
+}
