@@ -11,4 +11,8 @@ describe('the test', function () {
             bar: 789
         });
     });
+
+    it('should work with multi-argument assertions', function () {
+        expect(88, 'to be within', 1, 50);
+    });
 });
