@@ -16,6 +16,7 @@
     "memoizesync": "^0.5.0"
   },
   "devDependencies": {
+    "mocha": "3.2.0",
     "unexpected": "unexpectedjs/unexpected#d5a2142dcd52fa574ee10210f7f2ddce75e860f0"
   },
   "peerDependencies": {
