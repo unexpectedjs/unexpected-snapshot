@@ -1,6 +1,4 @@
 const expect = require('unexpected');
-const fileception = require('fileception');
-const Mocha = require('mocha');
 const pathModule = require('path');
 const fs = expect.promise.promisifyAll(require('fs'));
 const os = require('os');
