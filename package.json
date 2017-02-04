@@ -13,6 +13,7 @@
     "detect-indent": "5.0.0",
     "eslint": "~3.14.1",
     "espree": "^3.3.2",
+    "lodash": "4.17.4",
     "memoizesync": "^0.5.0"
   },
   "devDependencies": {
