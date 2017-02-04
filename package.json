@@ -4,7 +4,10 @@
   "description": "",
   "main": "lib/fixpect.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint .",
+    "test": "mocha",
+    "travis": "npm test && npm run lint && npm run coverage && (<coverage/lcov.info coveralls || true)",
+    "coverage": "NODE_ENV=development nyc --reporter=lcov --reporter=text --all -- mocha && echo google-chrome coverage/lcov-report/index.html"
   },
   "author": "Andreas Lind <andreas@one.com>",
   "license": "BSD-3-Clause",
@@ -17,7 +20,11 @@
     "memoizesync": "^0.5.0"
   },
   "devDependencies": {
+    "coveralls": "2.11.15",
+    "eslint": "3.14.1",
+    "eslint-config-onelint": "2.0.0",
     "mocha": "3.2.0",
+    "nyc": "10.1.2",
     "unexpected": "unexpectedjs/unexpected#d5a2142dcd52fa574ee10210f7f2ddce75e860f0"
   },
   "peerDependencies": {
