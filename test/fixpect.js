@@ -34,6 +34,53 @@ describe('fixpect', function () {
             `);
         });
 
+        it('should fix a failing multiline string comparison', function () {
+            return expect(`
+                it('should foo', function () {
+                    var str = '';
+                    for (var i = 0 ; i < 20 ; i += 1) {
+                        str += 'abcdefghijklmnopqrstuvwxyz1234567890\\n';
+                    }
+                    expect(
+                        str,
+                        'to equal',
+                        ''
+                    );
+                });
+            `, 'to come out as', `
+                it('should foo', function () {
+                    var str = '';
+                    for (var i = 0 ; i < 20 ; i += 1) {
+                        str += 'abcdefghijklmnopqrstuvwxyz1234567890\\n';
+                    }
+                    expect(
+                        str,
+                        'to equal',
+                        'abcdefghijklmnopqrstuvwxyz1234567890\\n' +
+                        'abcdefghijklmnopqrstuvwxyz1234567890\\n' +
+                        'abcdefghijklmnopqrstuvwxyz1234567890\\n' +
+                        'abcdefghijklmnopqrstuvwxyz1234567890\\n' +
+                        'abcdefghijklmnopqrstuvwxyz1234567890\\n' +
+                        'abcdefghijklmnopqrstuvwxyz1234567890\\n' +
+                        'abcdefghijklmnopqrstuvwxyz1234567890\\n' +
+                        'abcdefghijklmnopqrstuvwxyz1234567890\\n' +
+                        'abcdefghijklmnopqrstuvwxyz1234567890\\n' +
+                        'abcdefghijklmnopqrstuvwxyz1234567890\\n' +
+                        'abcdefghijklmnopqrstuvwxyz1234567890\\n' +
+                        'abcdefghijklmnopqrstuvwxyz1234567890\\n' +
+                        'abcdefghijklmnopqrstuvwxyz1234567890\\n' +
+                        'abcdefghijklmnopqrstuvwxyz1234567890\\n' +
+                        'abcdefghijklmnopqrstuvwxyz1234567890\\n' +
+                        'abcdefghijklmnopqrstuvwxyz1234567890\\n' +
+                        'abcdefghijklmnopqrstuvwxyz1234567890\\n' +
+                        'abcdefghijklmnopqrstuvwxyz1234567890\\n' +
+                        'abcdefghijklmnopqrstuvwxyz1234567890\\n' +
+                        'abcdefghijklmnopqrstuvwxyz1234567890\\n'
+                    );
+                });
+            `);
+        });
+
         it('should fix a failing number comparison', function () {
             return expect(`
                 it('should foo', function () {
