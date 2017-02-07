@@ -12,6 +12,7 @@
   "author": "Andreas Lind <andreas@one.com>",
   "license": "BSD-3-Clause",
   "dependencies": {
+    "babel": "6.5.2",
     "detect-indent": "5.0.0",
     "eslint": "~3.14.1",
     "espree": "^3.3.2",
@@ -19,12 +20,19 @@
     "memoizesync": "^0.5.0"
   },
   "devDependencies": {
+    "babel-core": "6.22.1",
+    "babel-polyfill": "6.22.0",
+    "babel-preset-react": "6.22.0",
     "coveralls": "2.11.15",
     "eslint": "3.14.1",
     "eslint-config-onelint": "2.0.0",
     "mocha": "3.2.0",
     "nyc": "10.1.2",
-    "unexpected": "unexpectedjs/unexpected#d5a2142dcd52fa574ee10210f7f2ddce75e860f0"
+    "react": "15.4.2",
+    "react-addons-test-utils": "15.4.2",
+    "react-dom": "15.4.2",
+    "unexpected": "unexpectedjs/unexpected#d5a2142dcd52fa574ee10210f7f2ddce75e860f0",
+    "unexpected-react": "papandreou/unexpected-react#f884c8733fd959e01c5d493fc6f5a0fea3156d3d"
   },
   "peerDependencies": {
     "unexpected": "^10.23.0"

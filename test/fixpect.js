@@ -11,7 +11,7 @@ expect.addAssertion('<string> to come out as <string>', (expect, subject, value)
     return fs.mkdirAsync(tmpDir).catch(() => {}).then(() => {
         return fs.writeFileAsync(tmpFileName, preamble + subject, 'utf-8');
     }).then(() => {
-        const command = process.argv[0] + ' ' + pathModule.resolve(__dirname, '..', 'node_modules', '.bin', 'mocha') + ' ' + tmpFileName;
+        const command = process.argv[0] + ' ' + pathModule.resolve(__dirname, '..', 'node_modules', '.bin', 'mocha') + ' --compilers js:babel-core/register ' + tmpFileName;
         return expect.promise.fromNode(cb => {
             childProcess.exec(command, cb.bind(null, null));
         });
@@ -115,6 +115,46 @@ describe('fixpect', function () {
             `, 'to come out as', `
                 it('should foo', function () {
                     expect('foo', 'not to equal', 'foo');
+                });
+            `);
+        });
+    });
+
+    describe('with unexpected-react', function () {
+        it('should fix up JSX', function () {
+            return expect(`
+                var React = require('react');
+                var ReactTestUtils = require('react-addons-test-utils');
+
+                expect.use(require('unexpected-react'));
+
+                function MyComponent() {
+                    return (<button>Click somewhere else</button>);
+                }
+
+                describe('MyComponent', function () {
+                    it('renders a button', function () {
+                        var renderer = ReactTestUtils.createRenderer();
+                        renderer.render(<MyComponent />);
+                        expect(renderer, 'to have rendered', <button>Click me</button>);
+                    });
+                });
+            `, 'to come out as', `
+                var React = require('react');
+                var ReactTestUtils = require('react-addons-test-utils');
+
+                expect.use(require('unexpected-react'));
+
+                function MyComponent() {
+                    return (<button>Click somewhere else</button>);
+                }
+
+                describe('MyComponent', function () {
+                    it('renders a button', function () {
+                        var renderer = ReactTestUtils.createRenderer();
+                        renderer.render(<MyComponent />);
+                        expect(renderer, 'to have rendered', <button>Click somewhere else</button>);
+                    });
                 });
             `);
         });
