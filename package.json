@@ -12,7 +12,6 @@
   "author": "Andreas Lind <andreas@one.com>",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "callsite": "^1.0.0",
     "detect-indent": "5.0.0",
     "eslint": "~3.14.1",
     "espree": "^3.3.2",
