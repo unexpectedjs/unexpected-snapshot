@@ -15,7 +15,7 @@ expect.addAssertion('<string> to come out as <string>', (expect, subject, value)
         return expect.promise.fromNode(cb => {
             childProcess.exec(command, cb.bind(null, null));
         });
-    }).then((stdout, stderr) => {
+    }).then(([stdout, stderr]) => {
         return fs.readFileAsync(tmpFileName, 'utf-8');
     }).then(contents => {
         return expect(contents.substr(preamble.length), 'to equal', value);
