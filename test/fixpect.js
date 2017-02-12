@@ -2,7 +2,7 @@ const expect = require('unexpected');
 const pathModule = require('path');
 const fs = expect.promise.promisifyAll(require('fs'));
 const childProcess = require('child_process');
-const preamble = "var expect = require('" + pathModule.resolve(__dirname, '..', 'lib', 'fixpect.js') + "');\n";
+const preamble = "var expect = require('" + pathModule.resolve(__dirname, '..', 'lib', 'fixpect.js') + "')(require('unexpected').clone());\n";
 
 expect.addAssertion('<string> to come out as <string>', (expect, subject, value) => {
     const tmpDir = pathModule.resolve(__dirname, 'tmp');
