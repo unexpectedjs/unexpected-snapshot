@@ -118,5 +118,57 @@ describe('fixpect', function () {
                 });
             `);
         });
+
+        it('should fix up an assertion with a "middle of the rocket" assertion', function () {
+            return expect(`
+                expect.addAssertion('<any> when delayed a little bit <assertion>', function (expect, subject) {
+                    return expect.promise(function (run) {
+                        setTimeout(run(function () {
+                            return expect.shift();
+                        }), 1);
+                    });
+                });
+                it('should foo', function () {
+                    return expect(123, 'when delayed a little bit', 'to equal', 456);
+                });
+            `, 'to come out as', `
+                expect.addAssertion('<any> when delayed a little bit <assertion>', function (expect, subject) {
+                    return expect.promise(function (run) {
+                        setTimeout(run(function () {
+                            return expect.shift();
+                        }), 1);
+                    });
+                });
+                it('should foo', function () {
+                    return expect(123, 'when delayed a little bit', 'to equal', 123);
+                });
+            `);
+        });
+
+        it('should fix up a compound assertion', function () {
+            return expect(`
+                expect.addAssertion('<any> when delayed a little bit <assertion>', function (expect, subject) {
+                    return expect.promise(function (run) {
+                        setTimeout(run(function () {
+                            return expect.shift();
+                        }), 1);
+                    });
+                });
+                it('should foo', function () {
+                    return expect(123, 'when delayed a little bit to equal', 456);
+                });
+            `, 'to come out as', `
+                expect.addAssertion('<any> when delayed a little bit <assertion>', function (expect, subject) {
+                    return expect.promise(function (run) {
+                        setTimeout(run(function () {
+                            return expect.shift();
+                        }), 1);
+                    });
+                });
+                it('should foo', function () {
+                    return expect(123, 'when delayed a little bit to equal', 123);
+                });
+            `);
+        });
     });
 });
