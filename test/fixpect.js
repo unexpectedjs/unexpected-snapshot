@@ -4,22 +4,20 @@ const fs = expect.promise.promisifyAll(require('fs'));
 const childProcess = require('child_process');
 const preamble = "var expect = require('" + pathModule.resolve(__dirname, '..', 'lib', 'fixpect.js') + "')(require('unexpected').clone());\n";
 
-expect.addAssertion('<string> to come out as <string>', (expect, subject, value) => {
-    const tmpDir = pathModule.resolve(__dirname, 'tmp');
-    const tmpFileName = pathModule.resolve(tmpDir, 'fixpect' + Math.round(10000000 * Math.random()) + '.js');
+const tmpDir = pathModule.resolve(__dirname, 'tmp');
 
-    return fs.mkdirAsync(tmpDir).catch(() => {}).then(() => {
-        return fs.writeFileAsync(tmpFileName, preamble + subject, 'utf-8');
-    }).then(() => {
-        const command = process.argv[0] + ' ' + pathModule.resolve(__dirname, '..', 'node_modules', '.bin', 'mocha') + ' ' + tmpFileName;
-        return expect.promise.fromNode(cb => {
-            childProcess.exec(command, cb.bind(null, null));
-        });
-    }).then(([stdout, stderr]) => {
-        return fs.readFileAsync(tmpFileName, 'utf-8');
-    }).then(contents => {
-        return expect(contents.substr(preamble.length), 'to equal', value);
-    }).finally(() => fs.unlinkAsync(tmpFileName));
+before(() => fs.mkdirAsync(tmpDir).catch(() => {}));
+after(() => fs.rmdirAsync(tmpDir).catch(() => {}));
+
+expect.addAssertion('<string> to come out as <string>', (expect, subject, value) => {
+    const tmpFileName = pathModule.resolve(tmpDir, 'fixpect' + Math.round(10000000 * Math.random()) + '.js');
+    const testCommand = process.argv[0] + ' ' + pathModule.resolve(__dirname, '..', 'node_modules', '.bin', 'mocha') + ' ' + tmpFileName;
+
+    return fs.writeFileAsync(tmpFileName, preamble + subject, 'utf-8')
+    .then(() => expect.promise.fromNode(cb => childProcess.exec(testCommand, cb.bind(null, null))))
+    .then(([stdout, stderr]) => fs.readFileAsync(tmpFileName, 'utf-8'))
+    .then(contents => expect(contents.substr(preamble.length), 'to equal', value))
+    .finally(() => fs.unlinkAsync(tmpFileName));
 });
 
 describe('fixpect', function () {
