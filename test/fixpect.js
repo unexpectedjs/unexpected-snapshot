@@ -170,5 +170,35 @@ describe('fixpect', function () {
                 });
             `);
         });
+
+        it('should fix a complex compound assertion', function () {
+            return expect(`
+                function delayedIncrement(num, cb) {
+                    setTimeout(function () {
+                        if (typeof num === 'number') {
+                            cb(null, num + 1);
+                        } else {
+                            cb(new Error('not a number'));
+                        }
+                    }, 1);
+                }
+                it('should foo', function () {
+                    expect([123], 'when passed as parameters to async', delayedIncrement, 'to equal', 125);
+                });
+            `, 'to come out as', `
+                function delayedIncrement(num, cb) {
+                    setTimeout(function () {
+                        if (typeof num === 'number') {
+                            cb(null, num + 1);
+                        } else {
+                            cb(new Error('not a number'));
+                        }
+                    }, 1);
+                }
+                it('should foo', function () {
+                    expect([123], 'when passed as parameters to async', delayedIncrement, 'to equal', 123);
+                });
+            `);
+        });
     });
 });
