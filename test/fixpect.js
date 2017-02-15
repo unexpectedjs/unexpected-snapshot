@@ -119,6 +119,41 @@ describe('fixpect', function () {
             `);
         });
 
+        it('should fix a failing "to satisfy" comparison', function () {
+            return expect(`
+                it('should foo', function () {
+                    expect({ a: 456, b: { c: 789 } }, 'to satisfy', { b: 123 });
+                });
+            `, 'to come out as', `
+                it('should foo', function () {
+                    expect({ a: 456, b: { c: 789 } }, 'to satisfy', { a: 456, b: { c: 789 } });
+                });
+            `);
+        });
+
+        it('should fix a failing "to exhaustively satisfy" comparison', function () {
+            return expect(`
+                it('should foo', function () {
+                    expect({
+                        foo: 'foo',
+                        bar: 'bar',
+                        quux: 'quux'
+                    }, 'to exhaustively satisfy', {
+                        foo: 'foo',
+                        bar: 'bar'
+                    });
+                });
+            `, 'to come out as', `
+                it('should foo', function () {
+                    expect({
+                        foo: 'foo',
+                        bar: 'bar',
+                        quux: 'quux'
+                    }, 'to exhaustively satisfy', { foo: 'foo', bar: 'bar', quux: 'quux' });
+                });
+            `);
+        });
+
         it('should fix up an assertion with a "middle of the rocket" assertion', function () {
             return expect(`
                 expect.addAssertion('<any> when delayed a little bit <assertion>', function (expect, subject) {
