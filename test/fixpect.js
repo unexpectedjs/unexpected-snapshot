@@ -171,7 +171,7 @@ describe('fixpect', function () {
             `);
         });
 
-        it.skip('should fix a complex compound assertion', function () {
+        it('should fix a complex compound assertion', function () {
             return expect(`
                 function delayedIncrement(num, cb) {
                     setTimeout(function () {
