@@ -196,7 +196,7 @@ describe('fixpect', function () {
                     }, 1);
                 }
                 it('should foo', function () {
-                    expect([123], 'when passed as parameters to async', delayedIncrement, 'to equal', 123);
+                    expect([123], 'when passed as parameters to async', delayedIncrement, 'to equal', 124);
                 });
             `);
         });
