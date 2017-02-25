@@ -249,5 +249,29 @@ describe('fixpect', function () {
                 });
             `);
         });
+
+        it('should not fix a failing expect inside another async expect', function () {
+            return expect(`
+                it('should foo', function () {
+                    expect(function () {
+                        return expect.promise(function (run) {
+                            setImmediate(run(function () {
+                                expect(123, 'to equal', 456);
+                            }));
+                        });
+                    }, 'to error');
+                });
+            `, 'to come out as', `
+                it('should foo', function () {
+                    expect(function () {
+                        return expect.promise(function (run) {
+                            setImmediate(run(function () {
+                                expect(123, 'to equal', 456);
+                            }));
+                        });
+                    }, 'to error');
+                });
+            `);
+        });
     });
 });
