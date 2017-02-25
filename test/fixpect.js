@@ -233,5 +233,21 @@ describe('fixpect', function () {
                 });
             `);
         });
+
+        it('should not fix a failing expect inside another expect', function () {
+            return expect(`
+                it('should foo', function () {
+                    expect(function () {
+                        expect(123, 'to equal', 456);
+                    }, 'to throw', 'expected 123 to equal 456');
+                });
+            `, 'to come out as', `
+                it('should foo', function () {
+                    expect(function () {
+                        expect(123, 'to equal', 456);
+                    }, 'to throw', 'expected 123 to equal 456');
+                });
+            `);
+        });
     });
 });
