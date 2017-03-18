@@ -12,9 +12,11 @@
   "author": "Andreas Lind <andreas@one.com>",
   "license": "BSD-3-Clause",
   "dependencies": {
+    "byline": "5.0.0",
     "detect-indent": "5.0.0",
     "eslint": "~3.14.1",
     "espree": "^3.3.2",
+    "inquirer": "3.0.6",
     "lodash": "4.17.4",
     "memoizesync": "^0.5.0"
   },
