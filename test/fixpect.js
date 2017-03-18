@@ -1,6 +1,7 @@
 const expect = require('unexpected');
 const pathModule = require('path');
 const fs = expect.promise.promisifyAll(require('fs'));
+const _ = require('lodash');
 const childProcess = require('child_process');
 const preamble = "var expect = require('unexpected').clone().use(require('" + pathModule.resolve(__dirname, '..', 'lib', 'fixpect.js') + "'));\n";
 
@@ -14,7 +15,7 @@ expect.addAssertion('<string> to come out as <string>', (expect, subject, value)
     const testCommand = process.argv[0] + ' ' + pathModule.resolve(__dirname, '..', 'node_modules', '.bin', 'mocha') + ' ' + tmpFileName;
 
     return fs.writeFileAsync(tmpFileName, preamble + subject, 'utf-8')
-    .then(() => expect.promise.fromNode(cb => childProcess.exec(testCommand, cb.bind(null, null))))
+    .then(() => expect.promise.fromNode(cb => childProcess.exec(testCommand, {env: _.defaults({FIXPECT: 'yes'}, process.env)}, cb.bind(null, null))))
     .then(([stdout, stderr]) => fs.readFileAsync(tmpFileName, 'utf-8'))
     .then(contents => expect(contents.substr(preamble.length), 'to equal', value))
     .finally(() => fs.unlinkAsync(tmpFileName));
