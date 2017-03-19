@@ -152,6 +152,46 @@ describe('fixpect', function () {
             `);
         });
 
+        it('should fix an "<array> to satisfy <object>" assertion', function () {
+            return expect(`
+                it('should foo', function () {
+                    expect([
+                        'foo',
+                        'bar',
+                        'quux'
+                    ], 'to satisfy', { 1: 'baz' });
+                });
+            `, 'to come out as', `
+                it('should foo', function () {
+                    expect([
+                        'foo',
+                        'bar',
+                        'quux'
+                    ], 'to satisfy', { 1: 'bar' });
+                });
+            `);
+        });
+
+        it('should fix an "<array> to satisfy <array>" assertion', function () {
+            return expect(`
+                it('should foo', function () {
+                    expect([
+                        'foo',
+                        'bar',
+                        'quux'
+                    ], 'to satisfy', [ 'foo', 'bar' ]);
+                });
+            `, 'to come out as', `
+                it('should foo', function () {
+                    expect([
+                        'foo',
+                        'bar',
+                        'quux'
+                    ], 'to satisfy', [ 'foo', 'bar', 'quux' ]);
+                });
+            `);
+        });
+
         it('should fix up an assertion with a "middle of the rocket" assertion', function () {
             return expect(`
                 expect.addAssertion('<any> when delayed a little bit <assertion>', function (expect, subject) {
