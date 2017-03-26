@@ -17,6 +17,7 @@ expect.addAssertion('<string> to come out as <string>', (expect, subject, value)
     return fs.writeFileAsync(tmpFileName, preamble + subject, 'utf-8')
     .then(() => expect.promise.fromNode(cb => childProcess.exec(testCommand, {env: _.defaults({FIXPECT: 'yes'}, process.env)}, cb.bind(null, null))))
     .then(([err, stdout, stderr]) => {
+        console.log(stdout, stderr);
         if (err && err.code === 165) {
             throw new Error('fixpect failed with: ' + stdout);
         }
