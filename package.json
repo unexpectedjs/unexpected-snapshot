@@ -12,6 +12,7 @@
   "author": "Andreas Lind <andreas@one.com>",
   "license": "BSD-3-Clause",
   "dependencies": {
+    "bluebird": "^3.5.0",
     "byline": "5.0.0",
     "detect-indent": "5.0.0",
     "eslint": "~3.14.1",
