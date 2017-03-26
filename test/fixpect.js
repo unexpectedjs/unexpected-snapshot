@@ -262,7 +262,7 @@ describe('fixpect', function () {
                     }, 1);
                 }
                 it('should foo', function () {
-                    expect([123], 'when passed as parameters to async', delayedIncrement, 'to equal', 125);
+                    return expect([123], 'when passed as parameters to async', delayedIncrement, 'to equal', 125);
                 });
             `, 'to come out as', `
                 function delayedIncrement(num, cb) {
@@ -275,7 +275,7 @@ describe('fixpect', function () {
                     }, 1);
                 }
                 it('should foo', function () {
-                    expect([123], 'when passed as parameters to async', delayedIncrement, 'to equal', 124);
+                    return expect([123], 'when passed as parameters to async', delayedIncrement, 'to equal', 124);
                 });
             `);
         });
@@ -299,7 +299,7 @@ describe('fixpect', function () {
         it('should not fix a failing expect inside another async expect', function () {
             return expect(`
                 it('should foo', function () {
-                    expect(function () {
+                    return expect(function () {
                         return expect.promise(function (run) {
                             setImmediate(run(function () {
                                 expect(123, 'to equal', 456);
@@ -309,7 +309,7 @@ describe('fixpect', function () {
                 });
             `, 'to come out as', `
                 it('should foo', function () {
-                    expect(function () {
+                    return expect(function () {
                         return expect.promise(function (run) {
                             setImmediate(run(function () {
                                 expect(123, 'to equal', 456);
