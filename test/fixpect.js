@@ -16,7 +16,12 @@ expect.addAssertion('<string> to come out as <string>', (expect, subject, value)
 
     return fs.writeFileAsync(tmpFileName, preamble + subject, 'utf-8')
     .then(() => expect.promise.fromNode(cb => childProcess.exec(testCommand, {env: _.defaults({FIXPECT: 'yes'}, process.env)}, cb.bind(null, null))))
-    .then(([stdout, stderr]) => fs.readFileAsync(tmpFileName, 'utf-8'))
+    .then(([err, stdout, stderr]) => {
+        if (err && err.code === 165) {
+            throw new Error('fixpect failed with: ' + stdout);
+        }
+    })
+    .then(() => fs.readFileAsync(tmpFileName, 'utf-8'))
     .then(contents => expect(contents.substr(preamble.length), 'to equal', value))
     .finally(() => fs.unlinkAsync(tmpFileName));
 });
