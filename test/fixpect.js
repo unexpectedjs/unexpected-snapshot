@@ -130,7 +130,7 @@ describe('fixpect', function () {
                 });
             `, 'to come out as', `
                 it('should foo', function () {
-                    expect({ a: 456, b: { c: 789 } }, 'to satisfy', { a: 456, b: { c: 789 } });
+                    expect({ a: 456, b: { c: 789 } }, 'to satisfy', { b: { c: 789 } });
                 });
             `);
         });
