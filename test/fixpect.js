@@ -3,7 +3,7 @@ const pathModule = require('path');
 const fs = expect.promise.promisifyAll(require('fs'));
 const _ = require('lodash');
 const childProcess = require('child_process');
-const preamble = "var expect = require('unexpected').clone().use(require('" + pathModule.resolve(__dirname, '..', 'lib', 'fixpect.js') + "'));\n";
+const preamble = "var expect = require('unexpected').clone().use(require('" + pathModule.resolve(__dirname, '..', 'lib', 'fixpect.js') + "')).use(require('unexpected-react'));\n";
 
 const tmpDir = pathModule.resolve(__dirname, 'tmp');
 
@@ -12,7 +12,7 @@ after(() => fs.rmdirAsync(tmpDir).catch(() => {}));
 
 expect.addAssertion('<string> to come out as <string>', (expect, subject, value) => {
     const tmpFileName = pathModule.resolve(tmpDir, 'fixpect' + Math.round(10000000 * Math.random()) + '.js');
-    const testCommand = process.argv[0] + ' ' + pathModule.resolve(__dirname, '..', 'node_modules', '.bin', 'mocha') + ' ' + tmpFileName;
+    const testCommand = process.argv[0] + ' ' + pathModule.resolve(__dirname, '..', 'node_modules', '.bin', 'mocha') + ' --compilers js:babel-core/register ' + tmpFileName;
 
     return fs.writeFileAsync(tmpFileName, preamble + subject, 'utf-8')
     .then(() => expect.promise.fromNode(cb => childProcess.exec(testCommand, {env: _.defaults({FIXPECT: 'yes'}, process.env)}, cb.bind(null, null))))
@@ -316,6 +316,42 @@ describe('fixpect', function () {
                             }));
                         });
                     }, 'to error');
+                });
+            `);
+        });
+    });
+
+    describe('with unexpected-react', function () {
+        it('should fix up JSX', function () {
+            return expect(`
+                var React = require('react');
+                var ReactTestUtils = require('react-addons-test-utils');
+
+                function MyComponent() {
+                    return (<button>Click somewhere else</button>);
+                }
+
+                describe('MyComponent', function () {
+                    it('renders a button', function () {
+                        var renderer = ReactTestUtils.createRenderer();
+                        renderer.render(<MyComponent />);
+                        expect(renderer, 'to have rendered', <button>Click me</button>);
+                    });
+                });
+            `, 'to come out as', `
+                var React = require('react');
+                var ReactTestUtils = require('react-addons-test-utils');
+
+                function MyComponent() {
+                    return (<button>Click somewhere else</button>);
+                }
+
+                describe('MyComponent', function () {
+                    it('renders a button', function () {
+                        var renderer = ReactTestUtils.createRenderer();
+                        renderer.render(<MyComponent />);
+                        expect(renderer, 'to have rendered', <button>Click somewhere else</button>);
+                    });
                 });
             `);
         });
