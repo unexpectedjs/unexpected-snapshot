@@ -9,7 +9,7 @@
     "travis": "npm test && npm run lint && npm run coverage && (<coverage/lcov.info coveralls || true)",
     "coverage": "NODE_ENV=development nyc --reporter=lcov --reporter=text --all -- mocha && echo google-chrome coverage/lcov-report/index.html"
   },
-  "author": "Andreas Lind <andreas@one.com>",
+  "author": "Andreas Lind <andreaslindpetersen@gmail.com>",
   "license": "BSD-3-Clause",
   "dependencies": {
     "bluebird": "^3.5.0",
