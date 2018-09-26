@@ -26,7 +26,7 @@
     "eslint": "3.14.1",
     "eslint-config-onelint": "4.0.0",
     "mocha": "5.2.0",
-    "nyc": "11.0.0",
+    "nyc": "13.0.1",
     "unexpected": "unexpectedjs/unexpected#815b6853686a86ce72845fde21211c600cf05446"
   },
   "peerDependencies": {
