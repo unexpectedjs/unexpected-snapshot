@@ -1,7 +1,7 @@
 {
   "name": "fixpect",
   "version": "0.1.2",
-  "description": "",
+  "description": "Experiment that tries to enable snapshot-like testing without sidecar files",
   "main": "lib/fixpect.js",
   "scripts": {
     "lint": "eslint .",
