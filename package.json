@@ -10,7 +10,7 @@
     "coverage": "NODE_ENV=development nyc --reporter=lcov --reporter=text --all -- mocha && echo google-chrome coverage/lcov-report/index.html"
   },
   "author": "Andreas Lind <andreaslindpetersen@gmail.com>",
-  "license": "BSD-3-Clause",
+  "license": "BSD-2-Clause",
   "dependencies": {
     "bluebird": "^3.5.0",
     "byline": "5.0.0",
