@@ -19,7 +19,7 @@
     "espree": "^3.3.2",
     "inquirer": "3.0.6",
     "lodash": "4.17.4",
-    "memoizesync": "^0.5.0"
+    "memoizesync": "^1.1.1"
   },
   "devDependencies": {
     "coveralls": "2.11.15",
