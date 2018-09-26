@@ -15,15 +15,15 @@ expect.addAssertion('<string> to come out as <string>', (expect, subject, value)
     const testCommand = process.argv[0] + ' ' + pathModule.resolve(__dirname, '..', 'node_modules', '.bin', 'mocha') + ' ' + tmpFileName;
 
     return fs.writeFileAsync(tmpFileName, preamble + subject, 'utf-8')
-    .then(() => expect.promise.fromNode(cb => childProcess.exec(testCommand, {env: _.defaults({FIXPECT: 'yes'}, process.env)}, cb.bind(null, null))))
-    .then(([err, stdout, stderr]) => {
-        if (err && err.code === 165) {
-            throw new Error('fixpect failed with: ' + stdout);
-        }
-    })
-    .then(() => fs.readFileAsync(tmpFileName, 'utf-8'))
-    .then(contents => expect(contents.substr(preamble.length), 'to equal', value))
-    .finally(() => fs.unlinkAsync(tmpFileName));
+        .then(() => expect.promise.fromNode(cb => childProcess.exec(testCommand, {env: _.defaults({FIXPECT: 'yes'}, process.env)}, cb.bind(null, null))))
+        .then(([err, stdout, stderr]) => {
+            if (err && err.code === 165) {
+                throw new Error('fixpect failed with: ' + stdout);
+            }
+        })
+        .then(() => fs.readFileAsync(tmpFileName, 'utf-8'))
+        .then(contents => expect(contents.substr(preamble.length), 'to equal', value))
+        .finally(() => fs.unlinkAsync(tmpFileName));
 });
 
 describe('fixpect', function () {
