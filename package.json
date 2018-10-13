@@ -15,7 +15,7 @@
     "bluebird": "^3.5.0",
     "byline": "5.0.0",
     "detect-indent": "5.0.0",
-    "eslint": "~5.6.0",
+    "eslint": "~5.7.0",
     "espree": "^4.0.0",
     "inquirer": "6.2.0",
     "lodash": "4.17.11",
