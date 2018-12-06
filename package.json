@@ -16,7 +16,7 @@
     "byline": "5.0.0",
     "detect-indent": "5.0.0",
     "eslint": "~5.9.0",
-    "espree": "^4.0.0",
+    "espree": "^5.0.0",
     "inquirer": "6.2.1",
     "lodash": "4.17.11",
     "memoizesync": "^1.1.1"
