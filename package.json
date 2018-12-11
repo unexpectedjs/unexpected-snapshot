@@ -13,20 +13,20 @@
   "license": "BSD-3-Clause",
   "dependencies": {
     "bluebird": "^3.5.0",
-    "byline": "5.0.0",
-    "detect-indent": "5.0.0",
-    "eslint": "~5.10.0",
+    "byline": "^5.0.0",
+    "detect-indent": "^5.0.0",
+    "eslint": "^5.10.0",
     "espree": "^5.0.0",
-    "inquirer": "6.2.1",
-    "lodash": "4.17.11",
+    "inquirer": "^6.2.1",
+    "lodash": "^4.17.11",
     "memoizesync": "^1.1.1"
   },
   "devDependencies": {
-    "coveralls": "3.0.2",
+    "coveralls": "^3.0.2",
     "eslint-config-pretty-standard": "^2.0.0",
     "eslint-plugin-prettier": "^3.0.0",
-    "mocha": "5.2.0",
-    "nyc": "13.0.1",
+    "mocha": "^5.2.0",
+    "nyc": "^13.0.1",
     "prettier": "~1.15.1",
     "unexpected": "unexpectedjs/unexpected#815b6853686a86ce72845fde21211c600cf05446"
   },
