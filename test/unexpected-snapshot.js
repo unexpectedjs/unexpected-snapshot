@@ -1,7 +1,6 @@
 const expect = require('unexpected').clone();
 const pathModule = require('path');
 const fs = expect.promise.promisifyAll(require('fs'));
-const _ = require('lodash');
 const childProcess = require('child_process');
 const preamble = `var expect = require('unexpected').clone().use(require('${pathModule.resolve(
   __dirname,
