@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "coveralls": "^3.0.2",
+    "escodegen": "^1.11.1",
     "eslint-config-pretty-standard": "^2.0.0",
     "eslint-plugin-prettier": "^3.0.0",
     "mocha": "^6.0.0",
