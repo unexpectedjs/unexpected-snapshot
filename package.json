@@ -2,7 +2,7 @@
   "name": "fixpect",
   "version": "0.1.2",
   "description": "",
-  "main": "lib/fixpect.js",
+  "main": "lib/unexpected-snapshot.js",
   "scripts": {
     "lint": "eslint .",
     "test": "mocha",
