@@ -71,7 +71,11 @@ expect.addAssertion(
 
       const contents = await fs.readFileAsync(tmpFileName, 'utf-8');
 
-      expect(contents.substr(preamble.length), 'to equal', value);
+      expect(
+        beautifyJavaScript(contents.substr(preamble.length)),
+        'to equal',
+        value
+      );
     } finally {
       await fs.unlinkAsync(tmpFileName);
     }
