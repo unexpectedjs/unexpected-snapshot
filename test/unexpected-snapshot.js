@@ -130,4 +130,24 @@ describe('to match inline snapshot', function() {
       }
     );
   });
+
+  it('should not try to support circular references', function() {
+    return expect(
+      () => {
+        it('should foo', function() {
+          const foo = { bar: 123 };
+          foo.quux = foo;
+          expect(foo, 'to match inline snapshot');
+        });
+      },
+      'to come out as',
+      () => {
+        it('should foo', function() {
+          const foo = { bar: 123 };
+          foo.quux = foo;
+          expect(foo, 'to match inline snapshot');
+        });
+      }
+    );
+  });
 });
