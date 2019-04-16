@@ -82,18 +82,18 @@ expect.addAssertion(
   }
 );
 
-describe('to match inline snapshot', function() {
+describe('to match snapshot', function() {
   it('should fill in a missing string', function() {
     return expect(
       () => {
         it('should foo', function() {
-          expect('foo', 'to match inline snapshot');
+          expect('foo', 'to match snapshot');
         });
       },
       'to come out as',
       () => {
         it('should foo', function() {
-          expect('foo', 'to match inline snapshot', 'foo');
+          expect('foo', 'to match snapshot', 'foo');
         });
       }
     );
@@ -103,13 +103,13 @@ describe('to match inline snapshot', function() {
     return expect(
       () => {
         it('should foo', function() {
-          expect({ foo: 'bar' }, 'to match inline snapshot');
+          expect({ foo: 'bar' }, 'to match snapshot');
         });
       },
       'to come out as',
       () => {
         it('should foo', function() {
-          expect({ foo: 'bar' }, 'to match inline snapshot', { foo: 'bar' });
+          expect({ foo: 'bar' }, 'to match snapshot', { foo: 'bar' });
         });
       }
     );
@@ -119,13 +119,13 @@ describe('to match inline snapshot', function() {
     return expect(
       () => {
         it('should foo', function() {
-          expect('foo', 'to match inline snapshot', 'bar');
+          expect('foo', 'to match snapshot', 'bar');
         });
       },
       'to come out as',
       () => {
         it('should foo', function() {
-          expect('foo', 'to match inline snapshot', 'foo');
+          expect('foo', 'to match snapshot', 'foo');
         });
       }
     );
@@ -137,7 +137,7 @@ describe('to match inline snapshot', function() {
         it('should foo', function() {
           const foo = { bar: 123 };
           foo.quux = foo;
-          expect(foo, 'to match inline snapshot');
+          expect(foo, 'to match snapshot');
         });
       },
       'to come out as',
@@ -145,7 +145,7 @@ describe('to match inline snapshot', function() {
         it('should foo', function() {
           const foo = { bar: 123 };
           foo.quux = foo;
-          expect(foo, 'to match inline snapshot');
+          expect(foo, 'to match snapshot');
         });
       }
     );
