@@ -30,8 +30,11 @@ function beautifyJavaScript(value) {
   if (typeof value === 'string') {
     ast = espree.parse(value, parserOptions);
   } else if (typeof value === 'function') {
-    ast = espree.parse(`(${value.toString()})`, parserOptions).body[0]
-      .expression.body;
+    ast = {
+      type: 'Program',
+      body: espree.parse(`(${value.toString()})`, parserOptions).body[0]
+        .expression.body.body
+    };
   } else {
     ast = value;
   }
