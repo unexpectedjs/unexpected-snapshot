@@ -153,4 +153,48 @@ describe('to match snapshot', function() {
       }
     );
   });
+
+  describe.skip('with expect.it', function() {
+    it('should fill in a missing string', function() {
+      return expect(
+        () => {
+          it('should foo', function() {
+            expect({ bar: 'foo' }, 'to satisfy', {
+              bar: expect.it('to match snapshot')
+            });
+          });
+        },
+        'to come out as',
+        () => {
+          it('should foo', function() {
+            expect({ bar: 'foo' }, 'to satisfy', {
+              bar: expect.it('to match snapshot', 'foo')
+            });
+          });
+        }
+      );
+    });
+
+    it('should fill in a missing object', function() {
+      return expect(
+        () => {
+          it('should foo', function() {
+            expect({ foo: { bar: 'quux' } }, 'to satisfy', {
+              foo: expect.it('to match snapshot')
+            });
+          });
+        },
+        'to come out as',
+        () => {
+          it('should foo', function() {
+            expect({ foo: { bar: 'quux' } }, 'to satisfy', {
+              foo: expect.it('to match snapshot', {
+                bar: 'quux'
+              })
+            });
+          });
+        }
+      );
+    });
+  });
 });
