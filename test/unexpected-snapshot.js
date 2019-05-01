@@ -38,14 +38,16 @@ function beautifyJavaScript(value) {
   } else {
     ast = value;
   }
-  return escodegen.generate(ast);
+  return escodegen.generate(ast, { format: { indent: { style: '  ' } } });
 }
 
 expect.addAssertion(
-  '<string|function> to come out as <string|function>',
+  '<string|function> to come out as [exactly] <string|function>',
   async (expect, subject, value) => {
-    subject = beautifyJavaScript(subject);
-    value = beautifyJavaScript(value);
+    if (!expect.flags.exactly) {
+      subject = beautifyJavaScript(subject);
+      value = beautifyJavaScript(value);
+    }
     const tmpFileName = pathModule.resolve(
       tmpDir,
       `unexpected-snapshot-${Math.round(10000000 * Math.random())}.js`
@@ -72,13 +74,13 @@ expect.addAssertion(
         throw new Error(`fixpect failed with: ${stdout}`);
       }
 
-      const contents = await fs.readFileAsync(tmpFileName, 'utf-8');
-
-      expect(
-        beautifyJavaScript(contents.substr(preamble.length)),
-        'to equal',
-        value
+      let output = (await fs.readFileAsync(tmpFileName, 'utf-8')).substr(
+        preamble.length
       );
+      if (!expect.flags.exactly) {
+        output = beautifyJavaScript(output);
+      }
+      expect(output, 'to equal', value);
     } finally {
       await fs.unlinkAsync(tmpFileName);
     }
@@ -88,18 +90,41 @@ expect.addAssertion(
 describe('to match snapshot', function() {
   it('should fill in a missing string', function() {
     return expect(
-      () => {
-        it('should foo', function() {
-          expect('foo', 'to match snapshot');
-        });
-      },
-      'to come out as',
-      () => {
-        it('should foo', function() {
-          expect('foo', 'to match snapshot', 'foo');
-        });
-      }
+      `
+it('should foo', function() {
+  expect('foo', 'to match snapshot');
+});
+      `,
+      'to come out as exactly',
+      `
+it('should foo', function() {
+  expect('foo', 'to match snapshot', \`
+    foo
+  \`);
+});
+      `
     );
+  });
+
+  describe('with a multi line string', function() {
+    it('should inject a template string with indentation', function() {
+      return expect(
+        `
+it('should foo', function() {
+  expect('foo\\nbar', 'to match snapshot');
+});
+        `,
+        'to come out as exactly',
+        `
+it('should foo', function() {
+  expect('foo\\nbar', 'to match snapshot', \`
+    foo
+    bar
+  \`);
+});
+        `
+      );
+    });
   });
 
   it('should fill in a missing object', function() {
@@ -120,17 +145,19 @@ describe('to match snapshot', function() {
 
   it('should update a mismatching string', function() {
     return expect(
-      () => {
-        it('should foo', function() {
-          expect('foo', 'to match snapshot', 'bar');
-        });
-      },
+      `
+it('should foo', function() {
+  expect('foo', 'to match snapshot', 'bar');
+});
+      `,
       'to come out as',
-      () => {
-        it('should foo', function() {
-          expect('foo', 'to match snapshot', 'foo');
-        });
-      }
+      `
+it('should foo', function() {
+  expect('foo', 'to match snapshot', \`
+    foo
+  \`);
+});
+      `
     );
   });
 
