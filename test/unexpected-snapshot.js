@@ -125,22 +125,52 @@ it('should foo', function() {
         `
       );
     });
-  });
 
-  it('should fill in a missing object', function() {
-    return expect(
-      () => {
-        it('should foo', function() {
-          expect({ foo: 'bar' }, 'to match snapshot');
-        });
-      },
-      'to come out as',
-      () => {
-        it('should foo', function() {
-          expect({ foo: 'bar' }, 'to match snapshot', { foo: 'bar' });
-        });
-      }
-    );
+    it('should inject a template string at 3x2 space indent', function() {
+      return expect(
+        `
+if (true) {
+  it('should foo', function() {
+    expect('foo\\nbar', 'to match snapshot');
+  });
+}
+        `,
+        'to come out as exactly',
+        `
+if (true) {
+  it('should foo', function() {
+    expect('foo\\nbar', 'to match snapshot', \`
+      foo
+      bar
+    \`);
+  });
+}
+        `
+      );
+    });
+
+    it('should inject a template string at 3x4 space indent', function() {
+      return expect(
+        `
+if (true) {
+    it('should foo', function() {
+        expect('foo\\nbar', 'to match snapshot');
+    });
+}
+        `,
+        'to come out as exactly',
+        `
+if (true) {
+    it('should foo', function() {
+        expect('foo\\nbar', 'to match snapshot', \`
+            foo
+            bar
+        \`);
+    });
+}
+        `
+      );
+    });
   });
 
   it('should update a mismatching string', function() {
@@ -158,6 +188,22 @@ it('should foo', function() {
   \`);
 });
       `
+    );
+  });
+
+  it('should fill in a missing object', function() {
+    return expect(
+      () => {
+        it('should foo', function() {
+          expect({ foo: 'bar' }, 'to match snapshot');
+        });
+      },
+      'to come out as',
+      () => {
+        it('should foo', function() {
+          expect({ foo: 'bar' }, 'to match snapshot', { foo: 'bar' });
+        });
+      }
     );
   });
 
