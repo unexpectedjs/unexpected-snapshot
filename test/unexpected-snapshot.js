@@ -177,6 +177,28 @@ if (true) {
     return expect(
       `
 it('should foo', function() {
+  expect('foo', 'to match snapshot', \`
+    bar
+  \`);
+});
+      `,
+      'to come out as',
+      `
+it('should foo', function() {
+  expect('foo', 'to match snapshot', \`
+    foo
+  \`);
+});
+      `
+    );
+  });
+
+  // Fails with "Missing leading newline in snapshot",
+  // consider a more graceful approach
+  it.skip('should update a mismatching oneline string', function() {
+    return expect(
+      `
+it('should foo', function() {
   expect('foo', 'to match snapshot', 'bar');
 });
       `,
@@ -188,6 +210,48 @@ it('should foo', function() {
   \`);
 });
       `
+    );
+  });
+
+  it('should not precede empty lines with spaces', function() {
+    return expect(
+      `
+it('should foo', function() {
+  expect('foo\\n\\nbar', 'to match snapshot');
+});
+        `,
+      'to come out as exactly',
+      `
+it('should foo', function() {
+  expect('foo\\n\\nbar', 'to match snapshot', \`
+    foo
+
+    bar
+  \`);
+});
+        `
+    );
+  });
+
+  it('should indent whitespace-only lines', function() {
+    // The last space is escaped as \x20 to avoid being
+    // in conflict with .editorconfig
+    return expect(
+      `
+it('should foo', function() {
+  expect('foo\\n \\nbar', 'to match snapshot');
+});
+        `,
+      'to come out as exactly',
+      `
+it('should foo', function() {
+  expect('foo\\n \\nbar', 'to match snapshot', \`
+    foo
+    \x20
+    bar
+  \`);
+});
+        `
     );
   });
 
