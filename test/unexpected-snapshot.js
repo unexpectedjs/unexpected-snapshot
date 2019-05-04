@@ -146,13 +146,13 @@ it('should foo', function() {
     return expect(
       `
 it('should foo', function() {
-  expect('foo\n', 'to match snapshot');
+  expect('foo\\n', 'to match snapshot');
 });
       `,
       'to come out as exactly',
       `
 it('should foo', function() {
-  expect('foo', 'to match snapshot', \`
+  expect('foo\\n', 'to match snapshot', \`
     foo
 
   \`);

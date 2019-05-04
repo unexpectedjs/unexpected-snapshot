@@ -62,5 +62,9 @@ describe('stringSnapshot', () => {
     it('should round trip trailing whitespace', () => {
       expect('foo  ', 'to roundtrip');
     });
+
+    it('should roundtrip a line ending with newline', () => {
+      expect('foo\n', 'to roundtrip');
+    });
   });
 });
