@@ -41,6 +41,48 @@ function beautifyJavaScript(value) {
   return escodegen.generate(ast, { format: { indent: { style: '  ' } } });
 }
 
+async function writeTestToTemporaryFile(code) {
+  const tmpFileName = pathModule.resolve(
+    tmpDir,
+    `unexpected-snapshot-${Math.round(10000000 * Math.random())}.js`
+  );
+  await fs.writeFileAsync(tmpFileName, preamble + code, 'utf-8');
+  return tmpFileName;
+}
+
+async function runWithMocha(fileName, env = {}) {
+  const testCommand = `${process.argv[0]} ${pathModule.resolve(
+    __dirname,
+    '..',
+    'node_modules',
+    '.bin',
+    'mocha'
+  )} ${fileName}`;
+  const [err, stdout] = await expect.promise.fromNode(cb =>
+    childProcess.exec(
+      testCommand,
+      { env: { ...process.env, ...env } },
+      cb.bind(null, null)
+    )
+  );
+  return [err, stdout];
+}
+
+expect.addAssertion(
+  '<string|function> to come out unaltered',
+  async (expect, subject) => {
+    subject = beautifyJavaScript(subject);
+    const tmpFileName = await writeTestToTemporaryFile(subject);
+    await runWithMocha(tmpFileName, {
+      UNEXPECTED_SNAPSHOT_UPDATE: 'on'
+    });
+    const output = (await fs.readFileAsync(tmpFileName, 'utf-8')).substr(
+      preamble.length
+    );
+    expect(beautifyJavaScript(output), 'to equal', subject);
+  }
+);
+
 expect.addAssertion(
   '<string|function> to come out as [exactly] <string|function>',
   async (expect, subject, value) => {
@@ -48,27 +90,12 @@ expect.addAssertion(
       subject = beautifyJavaScript(subject);
       value = beautifyJavaScript(value);
     }
-    const tmpFileName = pathModule.resolve(
-      tmpDir,
-      `unexpected-snapshot-${Math.round(10000000 * Math.random())}.js`
-    );
-    const testCommand = `${process.argv[0]} ${pathModule.resolve(
-      __dirname,
-      '..',
-      'node_modules',
-      '.bin',
-      'mocha'
-    )} ${tmpFileName}`;
+    const tmpFileName = await writeTestToTemporaryFile(subject);
 
-    await fs.writeFileAsync(tmpFileName, preamble + subject, 'utf-8');
     try {
-      const [err, stdout] = await expect.promise.fromNode(cb =>
-        childProcess.exec(
-          testCommand,
-          { env: { ...process.env, UNEXPECTED_SNAPSHOT_UPDATE: 'on' } },
-          cb.bind(null, null)
-        )
-      );
+      const [err, stdout] = await runWithMocha(tmpFileName, {
+        UNEXPECTED_SNAPSHOT_UPDATE: 'on'
+      });
 
       if (err && err.code === 165) {
         throw new Error(`mocha failed with: ${stdout}`);
@@ -81,6 +108,15 @@ expect.addAssertion(
         output = beautifyJavaScript(output);
       }
       expect(output, 'to equal', value);
+
+      // Execute the test that now has the snapshot injected to
+      // assert that it now passes:
+
+      const [err2, stdout2] = await runWithMocha(tmpFileName);
+
+      if (err2) {
+        expect.fail(stdout2);
+      }
     } finally {
       await fs.unlinkAsync(tmpFileName);
     }
@@ -100,6 +136,25 @@ it('should foo', function() {
 it('should foo', function() {
   expect('foo', 'to match snapshot', \`
     foo
+  \`);
+});
+      `
+    );
+  });
+
+  it('should fill in a missing string with a trailing newline', function() {
+    return expect(
+      `
+it('should foo', function() {
+  expect('foo\n', 'to match snapshot');
+});
+      `,
+      'to come out as exactly',
+      `
+it('should foo', function() {
+  expect('foo', 'to match snapshot', \`
+    foo
+
   \`);
 });
       `
@@ -272,23 +327,13 @@ it('should foo', function() {
   });
 
   it('should not try to support circular references', function() {
-    return expect(
-      () => {
-        it('should foo', function() {
-          const foo = { bar: 123 };
-          foo.quux = foo;
-          expect(foo, 'to match snapshot');
-        });
-      },
-      'to come out as',
-      () => {
-        it('should foo', function() {
-          const foo = { bar: 123 };
-          foo.quux = foo;
-          expect(foo, 'to match snapshot');
-        });
-      }
-    );
+    return expect(() => {
+      it('should foo', function() {
+        const foo = { bar: 123 };
+        foo.quux = foo;
+        expect(foo, 'to match snapshot');
+      });
+    }, 'to come out unaltered');
   });
 
   describe.skip('with expect.it', function() {
