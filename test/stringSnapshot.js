@@ -22,6 +22,10 @@ describe('stringSnapshot', () => {
     it('should indent a line containing only spaces', () => {
       expect(encode('foo\n  \nbar', 2), 'to equal', '\n  foo\n    \n  bar\n');
     });
+
+    it('should indent a line ending with newline', () => {
+      expect(encode('foo\n', 2), 'to equal', '\n  foo\n\n');
+    });
   });
 
   describe('decode', () => {
