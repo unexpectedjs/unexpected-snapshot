@@ -71,7 +71,7 @@ expect.addAssertion(
       );
 
       if (err && err.code === 165) {
-        throw new Error(`fixpect failed with: ${stdout}`);
+        throw new Error(`mocha failed with: ${stdout}`);
       }
 
       let output = (await fs.readFileAsync(tmpFileName, 'utf-8')).substr(
