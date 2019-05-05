@@ -161,6 +161,34 @@ it('should foo', function() {
     );
   });
 
+  it('should base the indent on the literal being replaced', function() {
+    return expect(
+      `
+it('should foo', function() {
+  expect(
+    'foo',
+    'to match snapshot',
+    \`
+      bar
+    \`
+  );
+});
+      `,
+      'to come out as exactly',
+      `
+it('should foo', function() {
+  expect(
+    'foo',
+    'to match snapshot',
+    \`
+      foo
+    \`
+  );
+});
+      `
+    );
+  });
+
   describe('with a multi line string', function() {
     it('should inject a template string with indentation', function() {
       return expect(
