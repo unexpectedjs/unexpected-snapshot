@@ -123,18 +123,18 @@ expect.addAssertion(
   }
 );
 
-describe('to match snapshot', function() {
+describe('to equal snapshot', function() {
   it('should fill in a missing string', function() {
     return expect(
       `
 it('should foo', function() {
-  expect('foo', 'to match snapshot');
+  expect('foo', 'to equal snapshot');
 });
       `,
       'to come out as exactly',
       `
 it('should foo', function() {
-  expect('foo', 'to match snapshot', \`
+  expect('foo', 'to equal snapshot', \`
     foo
   \`);
 });
@@ -146,13 +146,13 @@ it('should foo', function() {
     return expect(
       `
 it('should foo', function() {
-  expect('foo\\n', 'to match snapshot');
+  expect('foo\\n', 'to equal snapshot');
 });
       `,
       'to come out as exactly',
       `
 it('should foo', function() {
-  expect('foo\\n', 'to match snapshot', \`
+  expect('foo\\n', 'to equal snapshot', \`
     foo
 
   \`);
@@ -167,7 +167,7 @@ it('should foo', function() {
 it('should foo', function() {
   expect(
     'foo',
-    'to match snapshot',
+    'to equal snapshot',
     \`
       bar
     \`
@@ -179,7 +179,7 @@ it('should foo', function() {
 it('should foo', function() {
   expect(
     'foo',
-    'to match snapshot',
+    'to equal snapshot',
     \`
       foo
     \`
@@ -194,13 +194,13 @@ it('should foo', function() {
       return expect(
         `
 it('should foo', function() {
-  expect('foo\\nbar', 'to match snapshot');
+  expect('foo\\nbar', 'to equal snapshot');
 });
         `,
         'to come out as exactly',
         `
 it('should foo', function() {
-  expect('foo\\nbar', 'to match snapshot', \`
+  expect('foo\\nbar', 'to equal snapshot', \`
     foo
     bar
   \`);
@@ -214,7 +214,7 @@ it('should foo', function() {
         `
 if (true) {
   it('should foo', function() {
-    expect('foo\\nbar', 'to match snapshot');
+    expect('foo\\nbar', 'to equal snapshot');
   });
 }
         `,
@@ -222,7 +222,7 @@ if (true) {
         `
 if (true) {
   it('should foo', function() {
-    expect('foo\\nbar', 'to match snapshot', \`
+    expect('foo\\nbar', 'to equal snapshot', \`
       foo
       bar
     \`);
@@ -237,7 +237,7 @@ if (true) {
         `
 if (true) {
     it('should foo', function() {
-        expect('foo\\nbar', 'to match snapshot');
+        expect('foo\\nbar', 'to equal snapshot');
     });
 }
         `,
@@ -245,7 +245,7 @@ if (true) {
         `
 if (true) {
     it('should foo', function() {
-        expect('foo\\nbar', 'to match snapshot', \`
+        expect('foo\\nbar', 'to equal snapshot', \`
             foo
             bar
         \`);
@@ -260,7 +260,7 @@ if (true) {
     return expect(
       `
 it('should foo', function() {
-  expect('foo', 'to match snapshot', \`
+  expect('foo', 'to equal snapshot', \`
     bar
   \`);
 });
@@ -268,7 +268,7 @@ it('should foo', function() {
       'to come out as',
       `
 it('should foo', function() {
-  expect('foo', 'to match snapshot', \`
+  expect('foo', 'to equal snapshot', \`
     foo
   \`);
 });
@@ -282,13 +282,13 @@ it('should foo', function() {
     return expect(
       `
 it('should foo', function() {
-  expect('foo', 'to match snapshot', 'bar');
+  expect('foo', 'to equal snapshot', 'bar');
 });
       `,
       'to come out as',
       `
 it('should foo', function() {
-  expect('foo', 'to match snapshot', \`
+  expect('foo', 'to equal snapshot', \`
     foo
   \`);
 });
@@ -300,13 +300,13 @@ it('should foo', function() {
     return expect(
       `
 it('should foo', function() {
-  expect('foo\\n\\nbar', 'to match snapshot');
+  expect('foo\\n\\nbar', 'to equal snapshot');
 });
         `,
       'to come out as exactly',
       `
 it('should foo', function() {
-  expect('foo\\n\\nbar', 'to match snapshot', \`
+  expect('foo\\n\\nbar', 'to equal snapshot', \`
     foo
 
     bar
@@ -322,13 +322,13 @@ it('should foo', function() {
     return expect(
       `
 it('should foo', function() {
-  expect('foo\\n \\nbar', 'to match snapshot');
+  expect('foo\\n \\nbar', 'to equal snapshot');
 });
         `,
       'to come out as exactly',
       `
 it('should foo', function() {
-  expect('foo\\n \\nbar', 'to match snapshot', \`
+  expect('foo\\n \\nbar', 'to equal snapshot', \`
     foo
     \x20
     bar
@@ -342,13 +342,13 @@ it('should foo', function() {
     return expect(
       () => {
         it('should foo', function() {
-          expect({ foo: 'bar' }, 'to match snapshot');
+          expect({ foo: 'bar' }, 'to equal snapshot');
         });
       },
       'to come out as',
       () => {
         it('should foo', function() {
-          expect({ foo: 'bar' }, 'to match snapshot', { foo: 'bar' });
+          expect({ foo: 'bar' }, 'to equal snapshot', { foo: 'bar' });
         });
       }
     );
@@ -359,7 +359,7 @@ it('should foo', function() {
       it('should foo', function() {
         const foo = { bar: 123 };
         foo.quux = foo;
-        expect(foo, 'to match snapshot');
+        expect(foo, 'to equal snapshot');
       });
     }, 'to come out unaltered');
   });
@@ -370,7 +370,7 @@ it('should foo', function() {
         () => {
           it('should foo', function() {
             expect({ bar: 'foo' }, 'to satisfy', {
-              bar: expect.it('to match snapshot')
+              bar: expect.it('to equal snapshot')
             });
           });
         },
@@ -378,7 +378,7 @@ it('should foo', function() {
         () => {
           it('should foo', function() {
             expect({ bar: 'foo' }, 'to satisfy', {
-              bar: expect.it('to match snapshot', 'foo')
+              bar: expect.it('to equal snapshot', 'foo')
             });
           });
         }
@@ -390,7 +390,7 @@ it('should foo', function() {
         () => {
           it('should foo', function() {
             expect({ foo: { bar: 'quux' } }, 'to satisfy', {
-              foo: expect.it('to match snapshot')
+              foo: expect.it('to equal snapshot')
             });
           });
         },
@@ -398,7 +398,7 @@ it('should foo', function() {
         () => {
           it('should foo', function() {
             expect({ foo: { bar: 'quux' } }, 'to satisfy', {
-              foo: expect.it('to match snapshot', {
+              foo: expect.it('to equal snapshot', {
                 bar: 'quux'
               })
             });
