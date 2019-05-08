@@ -1,8 +1,8 @@
 {
-  "name": "fixpect",
+  "name": "unexpected-snapshot",
   "version": "0.1.2",
   "description": "",
-  "main": "lib/fixpect.js",
+  "main": "lib/unexpected-snapshot.js",
   "scripts": {
     "lint": "eslint .",
     "test": "mocha",
@@ -12,6 +12,7 @@
   "author": "Andreas Lind <andreaslindpetersen@gmail.com>",
   "license": "BSD-3-Clause",
   "dependencies": {
+    "@gustavnikolaj/string-utils": "^2.0.0",
     "bluebird": "^3.5.0",
     "byline": "^5.0.0",
     "detect-indent": "^6.0.0",
@@ -23,12 +24,13 @@
   },
   "devDependencies": {
     "coveralls": "^3.0.2",
+    "escodegen": "^1.11.1",
     "eslint-config-pretty-standard": "^2.0.0",
     "eslint-plugin-prettier": "^3.0.0",
     "mocha": "^6.0.0",
     "nyc": "^14.0.0",
     "prettier": "~1.17.0",
-    "unexpected": "unexpectedjs/unexpected#815b6853686a86ce72845fde21211c600cf05446"
+    "unexpected": "^11.1.1"
   },
   "peerDependencies": {
     "unexpected": "^10.27.0"
