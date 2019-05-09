@@ -408,6 +408,56 @@ it('should foo', function() {
     );
   });
 
+  it('should support injecting certain safe built-in types in a literal snapshot', function() {
+    return expect(
+      () => {
+        it('should foo', function() {
+          expect(
+            {
+              date: new Date('2019-05-09T12:34:56.789Z'),
+              buffer: Buffer.from([0xde, 0xad, 0xbe, 0xef]),
+              undefined: undefined,
+              null: null,
+              NaN: NaN,
+              Infinity: Infinity,
+              number: 123.456,
+              regexp: /abc(?:)/gim
+            },
+            'to equal snapshot'
+          );
+        });
+      },
+      'to come out as',
+      () => {
+        it('should foo', function() {
+          expect(
+            {
+              date: new Date('2019-05-09T12:34:56.789Z'),
+              buffer: Buffer.from([0xde, 0xad, 0xbe, 0xef]),
+              undefined: undefined,
+              null: null,
+              NaN: NaN,
+              Infinity: Infinity,
+              number: 123.456,
+              regexp: /abc(?:)/gim
+            },
+            'to equal snapshot',
+            {
+              date: new Date('Thu, 09 May 2019 12:34:56.789 GMT'),
+              buffer: new Buffer([0xde, 0xad, 0xbe, 0xef]),
+              undefined: undefined,
+              null: null,
+              NaN: NaN,
+              Infinity: Infinity,
+              number: 123.456,
+              regexp: /abc(?:)/gim
+            }
+          );
+        });
+      }
+    );
+  });
+
   describe.skip('with expect.it', function() {
     it('should fill in a missing string', function() {
       return expect(
