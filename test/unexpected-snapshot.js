@@ -124,7 +124,7 @@ expect.addAssertion(
 );
 
 describe('to equal snapshot', function() {
-  it('should fill in a missing string', function() {
+  it('should fill in a missing single line string', function() {
     return expect(
       `
 it('should foo', function() {
@@ -134,9 +134,7 @@ it('should foo', function() {
       'to come out as exactly',
       `
 it('should foo', function() {
-  expect('foo', 'to equal snapshot', \`
-    foo
-  \`);
+  expect('foo', 'to equal snapshot', 'foo');
 });
       `
     );
@@ -152,7 +150,7 @@ it('should foo', function() {
       'to come out as exactly',
       `
 it('should foo', function() {
-  expect('foo\\n', 'to equal snapshot', \`
+  expect('foo\\n', 'to equal snapshot', expect.unindent\`
     foo
 
   \`);
@@ -168,9 +166,7 @@ it('should foo', function() {
   expect(
     'foo',
     'to equal snapshot',
-    \`
-      bar
-    \`
+    'bar'
   );
 });
       `,
@@ -180,9 +176,7 @@ it('should foo', function() {
   expect(
     'foo',
     'to equal snapshot',
-    \`
-      foo
-    \`
+    'foo'
   );
 });
       `
@@ -200,7 +194,7 @@ it('should foo', function() {
         'to come out as exactly',
         `
 it('should foo', function() {
-  expect('foo\\nbar', 'to equal snapshot', \`
+  expect('foo\\nbar', 'to equal snapshot', expect.unindent\`
     foo
     bar
   \`);
@@ -222,7 +216,7 @@ if (true) {
         `
 if (true) {
   it('should foo', function() {
-    expect('foo\\nbar', 'to equal snapshot', \`
+    expect('foo\\nbar', 'to equal snapshot', expect.unindent\`
       foo
       bar
     \`);
@@ -245,7 +239,7 @@ if (true) {
         `
 if (true) {
     it('should foo', function() {
-        expect('foo\\nbar', 'to equal snapshot', \`
+        expect('foo\\nbar', 'to equal snapshot', expect.unindent\`
             foo
             bar
         \`);
@@ -260,7 +254,7 @@ if (true) {
     return expect(
       `
 it('should foo', function() {
-  expect('foo', 'to equal snapshot', \`
+  expect('foo', 'to equal snapshot', expect.unindent\`
     bar
   \`);
 });
@@ -268,17 +262,13 @@ it('should foo', function() {
       'to come out as',
       `
 it('should foo', function() {
-  expect('foo', 'to equal snapshot', \`
-    foo
-  \`);
+  expect('foo', 'to equal snapshot', 'foo');
 });
       `
     );
   });
 
-  // Fails with "Missing leading newline in snapshot",
-  // consider a more graceful approach
-  it.skip('should update a mismatching oneline string', function() {
+  it('should update a mismatching oneline string', function() {
     return expect(
       `
 it('should foo', function() {
@@ -288,9 +278,7 @@ it('should foo', function() {
       'to come out as',
       `
 it('should foo', function() {
-  expect('foo', 'to equal snapshot', \`
-    foo
-  \`);
+  expect('foo', 'to equal snapshot', 'foo');
 });
       `
     );
@@ -306,7 +294,7 @@ it('should foo', function() {
       'to come out as exactly',
       `
 it('should foo', function() {
-  expect('foo\\n\\nbar', 'to equal snapshot', \`
+  expect('foo\\n\\nbar', 'to equal snapshot', expect.unindent\`
     foo
 
     bar
@@ -328,7 +316,7 @@ it('should foo', function() {
       'to come out as exactly',
       `
 it('should foo', function() {
-  expect('foo\\n \\nbar', 'to equal snapshot', \`
+  expect('foo\\n \\nbar', 'to equal snapshot', expect.unindent\`
     foo
     \x20
     bar
@@ -354,14 +342,70 @@ it('should foo', function() {
     );
   });
 
-  it('should not try to support circular references', function() {
-    return expect(() => {
-      it('should foo', function() {
-        const foo = { bar: 123 };
-        foo.quux = foo;
-        expect(foo, 'to equal snapshot');
-      });
-    }, 'to come out unaltered');
+  it('should fill in a missing array', function() {
+    return expect(
+      () => {
+        it('should foo', function() {
+          expect([123, 'abc'], 'to equal snapshot');
+        });
+      },
+      'to come out as',
+      () => {
+        it('should foo', function() {
+          expect([123, 'abc'], 'to equal snapshot', [123, 'abc']);
+        });
+      }
+    );
+  });
+
+  it('should switch to "to inspect as snapshot" when the subject contains a circular reference', function() {
+    return expect(
+      () => {
+        it('should foo', function() {
+          const foo = { bar: 123 };
+          foo.quux = foo;
+          expect(foo, 'to equal snapshot');
+        });
+      },
+      'to come out as',
+      function() {
+        it('should foo', function() {
+          const foo = { bar: 123 };
+          foo.quux = foo;
+          expect(
+            foo,
+            'to inspect as snapshot',
+            '{ bar: 123, quux: [Circular] }'
+          );
+        });
+      }
+    );
+  });
+
+  it('should switch to "to inspect as snapshot" when the subject contains an object that does not have Object.prototype as its constructor', function() {
+    return expect(
+      () => {
+        it('should foo', function() {
+          function Person(name) {
+            this.name = name;
+          }
+          expect(new Person('Eigil'), 'to equal snapshot');
+        });
+      },
+      'to come out as',
+      function() {
+        it('should foo', function() {
+          function Person(name) {
+            this.name = name;
+          }
+          expect(
+            new Person('Eigil'),
+            'to inspect as snapshot',
+            "Person({ name: 'Eigil' })"
+          );
+        });
+      }
+    );
   });
 
   describe.skip('with expect.it', function() {
