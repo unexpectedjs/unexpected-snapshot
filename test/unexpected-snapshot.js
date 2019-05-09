@@ -444,7 +444,7 @@ it('should foo', function() {
             'to equal snapshot',
             {
               date: new Date('Thu, 09 May 2019 12:34:56.789 GMT'),
-              buffer: new Buffer([0xde, 0xad, 0xbe, 0xef]),
+              buffer: Buffer.from([0xde, 0xad, 0xbe, 0xef]),
               undefined: undefined,
               null: null,
               NaN: NaN,
