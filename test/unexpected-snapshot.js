@@ -74,7 +74,7 @@ expect.addAssertion(
     subject = beautifyJavaScript(subject);
     const tmpFileName = await writeTestToTemporaryFile(subject);
     await runWithMocha(tmpFileName, {
-      UNEXPECTED_SNAPSHOT_UPDATE: 'on'
+      UNEXPECTED_SNAPSHOT: 'on'
     });
     const output = (await fs.readFileAsync(tmpFileName, 'utf-8')).substr(
       preamble.length
@@ -94,7 +94,7 @@ expect.addAssertion(
 
     try {
       const [err, stdout] = await runWithMocha(tmpFileName, {
-        UNEXPECTED_SNAPSHOT_UPDATE: 'on'
+        UNEXPECTED_SNAPSHOT: 'on'
       });
 
       if (err && err.code === 165) {
