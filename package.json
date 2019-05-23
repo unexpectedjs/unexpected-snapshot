@@ -14,7 +14,7 @@
     "test": "mocha",
     "build": "rollup --config rollup.config.js --sourcemap --format umd --name unexpectedSnapshot --external inquirer,bluebird,supports-color,byline,eslint,eslint/lib/util/rule-fixer,eslint/lib/util/traverser,eslint/lib/util/source-code-fixer,./run,./ensureAfterHookIsRegistered -o unexpected-snapshot-browser.js lib/unexpected-snapshot.js",
     "test-headless": "npm run build && karma start --single-run",
-    "travis": "npm test && npm run test-headless && npm run lint && npm run coverage && (<coverage/lcov.info coveralls || true)",
+    "travis": "npm test && npm run test-headless && npm run lint && npm run coverage",
     "coverage": "NODE_ENV=development nyc --reporter=lcov --reporter=text --all -- mocha && echo google-chrome coverage/lcov-report/index.html",
     "prepublishOnly": "npm run build"
   },
