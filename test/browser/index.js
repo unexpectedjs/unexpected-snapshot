@@ -1,6 +1,7 @@
 /* global weknowhow, unexpectedSnapshot */
 
 const expect = weknowhow.expect.clone().use(unexpectedSnapshot);
+
 describe('unexpected-snapshot', function() {
   describe('to equal snapshot', function() {
     it('should succeed', function() {
