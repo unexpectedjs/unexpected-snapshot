@@ -134,7 +134,11 @@ describe('inspect as snapshot', () => {
       'to come out as',
       () => {
         it('should foo', function() {
-          expect(['a', 'b', 'c'], 'to inspect as snapshot', "['a', 'b', 'c']");
+          expect(
+            ['a', 'b', 'c'],
+            'to inspect as snapshot',
+            "[ 'a', 'b', 'c' ]"
+          );
         });
       }
     );
@@ -150,7 +154,11 @@ describe('inspect as snapshot', () => {
       'to come out as',
       () => {
         it('should foo', function() {
-          expect(['a', 'b', 'c'], 'to inspect as snapshot', "['a', 'b', 'c']");
+          expect(
+            ['a', 'b', 'c'],
+            'to inspect as snapshot',
+            "[ 'a', 'b', 'c' ]"
+          );
         });
       }
     );
@@ -175,7 +183,7 @@ describe('inspect as snapshot', () => {
             ['c', 'a', 'b'],
             'when sorted',
             'to inspect as snapshot',
-            "['a', 'b', 'c']"
+            "[ 'a', 'b', 'c' ]"
           );
         });
       }
