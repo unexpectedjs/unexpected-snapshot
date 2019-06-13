@@ -458,6 +458,30 @@ it('should foo', function() {
     );
   });
 
+  it('supports matching snapshots on shifted subjects', () => {
+    return expect(
+      () => {
+        it('should foo', function() {
+          expect(['c', 'a', 'b'], 'when sorted', 'to equal snapshot', [
+            'a',
+            'b',
+            'c'
+          ]);
+        });
+      },
+      'to come out as',
+      () => {
+        it('should foo', function() {
+          expect(['c', 'a', 'b'], 'when sorted', 'to equal snapshot', [
+            'a',
+            'b',
+            'c'
+          ]);
+        });
+      }
+    );
+  });
+
   describe.skip('with expect.it', function() {
     it('should fill in a missing string', function() {
       return expect(
