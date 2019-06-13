@@ -139,6 +139,23 @@ describe('inspect as snapshot', () => {
       }
     );
   });
+
+  it('should update incorrect snapshots', function() {
+    return expect(
+      () => {
+        it('should foo', function() {
+          expect(['a', 'b', 'c'], 'to inspect as snapshot', "['a', 'b', 'c']");
+        });
+      },
+      'to come out as',
+      () => {
+        it('should foo', function() {
+          expect(['a', 'b', 'c'], 'to inspect as snapshot', "['a', 'b', 'c']");
+        });
+      }
+    );
+  });
+
   it('supports inspected snapshots on shifted subjects', () => {
     return expect(
       () => {
