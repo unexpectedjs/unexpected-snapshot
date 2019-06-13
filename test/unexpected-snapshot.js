@@ -123,6 +123,74 @@ expect.addAssertion(
   }
 );
 
+describe('inspect as snapshot', () => {
+  it('should fill in a missing snapshot', function() {
+    return expect(
+      () => {
+        it('should foo', function() {
+          expect(['a', 'b', 'c'], 'to inspect as snapshot');
+        });
+      },
+      'to come out as',
+      () => {
+        it('should foo', function() {
+          expect(
+            ['a', 'b', 'c'],
+            'to inspect as snapshot',
+            "[ 'a', 'b', 'c' ]"
+          );
+        });
+      }
+    );
+  });
+
+  it('should update incorrect snapshots', function() {
+    return expect(
+      () => {
+        it('should foo', function() {
+          expect(['a', 'b', 'c'], 'to inspect as snapshot', "['a', 'b', 'c']");
+        });
+      },
+      'to come out as',
+      () => {
+        it('should foo', function() {
+          expect(
+            ['a', 'b', 'c'],
+            'to inspect as snapshot',
+            "[ 'a', 'b', 'c' ]"
+          );
+        });
+      }
+    );
+  });
+
+  it('supports inspected snapshots on shifted subjects', () => {
+    return expect(
+      () => {
+        it('should foo', function() {
+          expect(
+            ['c', 'a', 'b'],
+            'when sorted',
+            'to inspect as snapshot',
+            "['a', 'b', 'c']"
+          );
+        });
+      },
+      'to come out as',
+      () => {
+        it('should foo', function() {
+          expect(
+            ['c', 'a', 'b'],
+            'when sorted',
+            'to inspect as snapshot',
+            "[ 'a', 'b', 'c' ]"
+          );
+        });
+      }
+    );
+  });
+});
+
 describe('to equal snapshot', function() {
   it('should fill in a missing single line string', function() {
     return expect(
@@ -453,6 +521,29 @@ it('should foo', function() {
               regexp: /abc(?:)/gim
             }
           );
+        });
+      }
+    );
+  });
+
+  it('supports matching snapshots on shifted subjects', () => {
+    return expect(
+      () => {
+        it('should foo', function() {
+          expect(['c', 'a', 'b'], 'when sorted', 'to equal snapshot', [
+            'a',
+            'b'
+          ]);
+        });
+      },
+      'to come out as',
+      () => {
+        it('should foo', function() {
+          expect(['c', 'a', 'b'], 'when sorted', 'to equal snapshot', [
+            'a',
+            'b',
+            'c'
+          ]);
         });
       }
     );
