@@ -123,6 +123,34 @@ expect.addAssertion(
   }
 );
 
+describe('inspect as snapshot', () => {
+  it('supports inspected snapshots on shifted subjects', () => {
+    return expect(
+      () => {
+        it('should foo', function() {
+          expect(
+            ['c', 'a', 'b'],
+            'when sorted',
+            'to inspect as snapshot',
+            "['a', 'b', 'c']"
+          );
+        });
+      },
+      'to come out as',
+      () => {
+        it('should foo', function() {
+          expect(
+            ['c', 'a', 'b'],
+            'when sorted',
+            'to inspect as snapshot',
+            "['a', 'b', 'c']"
+          );
+        });
+      }
+    );
+  });
+});
+
 describe('to equal snapshot', function() {
   it('should fill in a missing single line string', function() {
     return expect(
@@ -464,8 +492,7 @@ it('should foo', function() {
         it('should foo', function() {
           expect(['c', 'a', 'b'], 'when sorted', 'to equal snapshot', [
             'a',
-            'b',
-            'c'
+            'b'
           ]);
         });
       },
