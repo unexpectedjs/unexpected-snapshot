@@ -124,6 +124,21 @@ expect.addAssertion(
 );
 
 describe('inspect as snapshot', () => {
+  it('should fill in a missing snapshot', function() {
+    return expect(
+      () => {
+        it('should foo', function() {
+          expect(['a', 'b', 'c'], 'to inspect as snapshot');
+        });
+      },
+      'to come out as',
+      () => {
+        it('should foo', function() {
+          expect(['a', 'b', 'c'], 'to inspect as snapshot', "['a', 'b', 'c']");
+        });
+      }
+    );
+  });
   it('supports inspected snapshots on shifted subjects', () => {
     return expect(
       () => {
