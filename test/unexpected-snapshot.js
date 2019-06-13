@@ -615,8 +615,7 @@ describe('with snapshot updating off', function() {
         'to throw',
         'expected 42 to equal snapshot\n' +
           '\n' +
-          'UNEXPECTED_SNAPSHOT environment not given, not updating snapshots in source files\n' +
-          'Rerun the command with UNEXPECTED_SNAPSHOT=yes to update the snapshots'
+          'Rerun the tests with UNEXPECTED_SNAPSHOT=yes in Node to update the snapshots'
       );
     });
 
@@ -634,8 +633,7 @@ describe('with snapshot updating off', function() {
         'to throw',
         'expected 42 to equal snapshot 666\n' +
           '\n' +
-          'UNEXPECTED_SNAPSHOT environment not given, not updating snapshots in source files\n' +
-          'Rerun the command with UNEXPECTED_SNAPSHOT=yes to update the snapshots'
+          'Rerun the tests with UNEXPECTED_SNAPSHOT=yes in Node to update the snapshots'
       );
     });
   });
@@ -649,8 +647,7 @@ describe('with snapshot updating off', function() {
         'to throw',
         'expected 42 to inspect as snapshot\n' +
           '\n' +
-          'UNEXPECTED_SNAPSHOT environment not given, not updating snapshots in source files\n' +
-          'Rerun the command with UNEXPECTED_SNAPSHOT=yes to update the snapshots'
+          'Rerun the tests with UNEXPECTED_SNAPSHOT=yes in Node to update the snapshots'
       );
     });
 
@@ -671,8 +668,7 @@ describe('with snapshot updating off', function() {
           '-42\n' +
           '+666\n' +
           '\n' +
-          'UNEXPECTED_SNAPSHOT environment not given, not updating snapshots in source files\n' +
-          'Rerun the command with UNEXPECTED_SNAPSHOT=yes to update the snapshots'
+          'Rerun the tests with UNEXPECTED_SNAPSHOT=yes in Node to update the snapshots'
       );
     });
   });

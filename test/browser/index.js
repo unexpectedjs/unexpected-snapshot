@@ -17,8 +17,7 @@ describe('unexpected-snapshot', function() {
           '-abc\n' +
           '+def\n' +
           '\n' +
-          'UNEXPECTED_SNAPSHOT environment not given, not updating snapshots in source files\n' +
-          'Rerun the command with UNEXPECTED_SNAPSHOT=yes to update the snapshots'
+          'Rerun the tests with UNEXPECTED_SNAPSHOT=yes in Node to update the snapshots'
       );
     });
   });
@@ -47,8 +46,7 @@ describe('unexpected-snapshot', function() {
         'to throw',
         "expected Person({ name: 'Eigil' }) to equal snapshot 'Person({ name: \\'Preben\\' })'\n" +
           '\n' +
-          'UNEXPECTED_SNAPSHOT environment not given, not updating snapshots in source files\n' +
-          'Rerun the command with UNEXPECTED_SNAPSHOT=yes to update the snapshots'
+          'Rerun the tests with UNEXPECTED_SNAPSHOT=yes in Node to update the snapshots'
       );
     });
   });
