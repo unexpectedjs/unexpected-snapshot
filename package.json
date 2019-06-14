@@ -12,7 +12,7 @@
   "scripts": {
     "lint": "eslint .",
     "test": "mocha",
-    "build": "rollup --config rollup.config.js --sourcemap --format umd --name unexpectedSnapshot --external bluebird,supports-color,byline,eslint,eslint/lib/util/rule-fixer,eslint/lib/util/traverser,eslint/lib/util/source-code-fixer,./run,./ensureAfterHookIsRegistered -o unexpected-snapshot-browser.js lib/unexpected-snapshot.js",
+    "build": "rollup --config rollup.config.js --sourcemap --format umd --name unexpectedSnapshot -o unexpected-snapshot-browser.js lib/unexpected-snapshot-check.js",
     "test-headless": "npm run build && karma start --single-run",
     "ci": "npm test && npm run test-headless && npm run lint && npm run coverage",
     "coverage": "NODE_ENV=development nyc --reporter=lcov --reporter=text --all -- mocha && echo google-chrome coverage/lcov-report/index.html",
@@ -28,7 +28,6 @@
     "eslint": "^5.10.0",
     "espree": "^5.0.0",
     "is-node": "^1.0.2",
-    "lodash": "^4.17.11",
     "memoizesync": "^1.1.1"
   },
   "devDependencies": {

@@ -12,7 +12,12 @@ describe('unexpected-snapshot', function() {
       expect(
         () => expect('abc', 'to equal snapshot', 'def'),
         'to throw',
-        "expected 'abc' to equal snapshot 'def'\n" + '\n' + '-abc\n' + '+def'
+        "expected 'abc' to equal snapshot 'def'\n" +
+          '\n' +
+          '-abc\n' +
+          '+def\n' +
+          '\n' +
+          'Rerun the tests with UNEXPECTED_SNAPSHOT=yes in Node to update the snapshots'
       );
     });
   });
@@ -39,7 +44,9 @@ describe('unexpected-snapshot', function() {
             "Person({ name: 'Preben' })"
           ),
         'to throw',
-        "expected Person({ name: 'Eigil' }) to equal snapshot 'Person({ name: \\'Preben\\' })'"
+        "expected Person({ name: 'Eigil' }) to equal snapshot 'Person({ name: \\'Preben\\' })'\n" +
+          '\n' +
+          'Rerun the tests with UNEXPECTED_SNAPSHOT=yes in Node to update the snapshots'
       );
     });
   });

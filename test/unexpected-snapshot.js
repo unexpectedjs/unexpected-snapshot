@@ -92,6 +92,7 @@ describe('with snapshot updating on', function() {
         value = beautifyJavaScript(value);
       }
       const tmpFileName = await writeTestToTemporaryFile(subject);
+      expect.errorMode = 'nested';
 
       try {
         const [err, stdout] = await runWithMocha(tmpFileName, {
@@ -612,7 +613,9 @@ describe('with snapshot updating off', function() {
           expect(42, 'to equal snapshot');
         },
         'to throw',
-        'expected 42 to equal snapshot'
+        'expected 42 to equal snapshot\n' +
+          '\n' +
+          'Rerun the tests with UNEXPECTED_SNAPSHOT=yes in Node to update the snapshots'
       );
     });
 
@@ -628,7 +631,9 @@ describe('with snapshot updating off', function() {
           expect(42, 'to equal snapshot', 666);
         },
         'to throw',
-        'expected 42 to equal snapshot 666'
+        'expected 42 to equal snapshot 666\n' +
+          '\n' +
+          'Rerun the tests with UNEXPECTED_SNAPSHOT=yes in Node to update the snapshots'
       );
     });
   });
@@ -640,7 +645,9 @@ describe('with snapshot updating off', function() {
           expect(42, 'to inspect as snapshot');
         },
         'to throw',
-        'expected 42 to inspect as snapshot'
+        'expected 42 to inspect as snapshot\n' +
+          '\n' +
+          'Rerun the tests with UNEXPECTED_SNAPSHOT=yes in Node to update the snapshots'
       );
     });
 
@@ -656,7 +663,12 @@ describe('with snapshot updating off', function() {
           expect(42, 'to inspect as snapshot', '666');
         },
         'to throw',
-        "expected 42 to inspect as snapshot '666'\n" + '\n' + '-42\n' + '+666'
+        "expected 42 to inspect as snapshot '666'\n" +
+          '\n' +
+          '-42\n' +
+          '+666\n' +
+          '\n' +
+          'Rerun the tests with UNEXPECTED_SNAPSHOT=yes in Node to update the snapshots'
       );
     });
   });
