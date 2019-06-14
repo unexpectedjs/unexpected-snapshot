@@ -195,6 +195,34 @@ describe('with snapshot updating on', function() {
         }
       );
     });
+
+    it('inspects with infinite depth', () => {
+      return expect(
+        () => {
+          it('should foo', function() {
+            expect(
+              {
+                down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } }
+              },
+              'to inspect as snapshot',
+              '{ down: { the: { rabbit: { hole: {} } } } }'
+            );
+          });
+        },
+        'to come out as',
+        () => {
+          it('should foo', function() {
+            expect(
+              {
+                down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } }
+              },
+              'to inspect as snapshot',
+              "{ down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } } }"
+            );
+          });
+        }
+      );
+    });
   });
 
   describe('to equal snapshot', function() {
@@ -555,6 +583,36 @@ it('should foo', function() {
       );
     });
 
+    it('inspects with infinite depth', () => {
+      return expect(
+        () => {
+          it('should foo', function() {
+            expect(
+              {
+                down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } }
+              },
+              'to equal snapshot',
+              { down: { the: { rabbit: { hole: {} } } } }
+            );
+          });
+        },
+        'to come out as',
+        () => {
+          it('should foo', function() {
+            expect(
+              {
+                down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } }
+              },
+              'to equal snapshot',
+              {
+                down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } }
+              }
+            );
+          });
+        }
+      );
+    });
+
     describe.skip('with expect.it', function() {
       it('should fill in a missing string', function() {
         return expect(
@@ -636,6 +694,16 @@ describe('with snapshot updating off', function() {
           'Rerun the tests with UNEXPECTED_SNAPSHOT=yes in Node to update the snapshots'
       );
     });
+
+    it('inspects with infinite depth', () => {
+      expect(() => {
+        expect(
+          { down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } } },
+          'to equal snapshot',
+          { down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } } }
+        );
+      }, 'not to throw');
+    });
   });
 
   describe('to inspect as snapshot', function() {
@@ -670,6 +738,16 @@ describe('with snapshot updating off', function() {
           '\n' +
           'Rerun the tests with UNEXPECTED_SNAPSHOT=yes in Node to update the snapshots'
       );
+    });
+
+    it('inspects with infinite depth', () => {
+      expect(() => {
+        expect(
+          { down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } } },
+          'to inspect as snapshot',
+          "{ down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } } }"
+        );
+      }, 'not to throw');
     });
   });
 });
