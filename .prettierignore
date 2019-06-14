@@ -1,3 +1,4 @@
 package.json
 /test/tmp/
 /unexpected-snapshot-browser.js
+/build/
