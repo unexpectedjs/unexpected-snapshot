@@ -285,6 +285,33 @@ it('should foo', function() {
       );
     });
 
+    it('should escape backticks in injected multiline snapshot', function() {
+      return expect(
+        `
+it('should foo', function() {
+  expect(
+    'foo\`\\nbar\`',
+    'to equal snapshot',
+    'bar'
+  );
+});
+      `,
+        'to come out as exactly',
+        `
+it('should foo', function() {
+  expect(
+    'foo\`\\nbar\`',
+    'to equal snapshot',
+    expect.unindent\`
+      foo\\\`
+      bar\\\`
+    \`
+  );
+});
+      `
+      );
+    });
+
     describe('with a multi line string', function() {
       it('should inject a template string with indentation', function() {
         return expect(
