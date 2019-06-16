@@ -487,28 +487,98 @@ it('should foo', function() {
       );
     });
 
-    it('should switch to "to inspect as snapshot" when the subject contains a circular reference', function() {
-      return expect(
-        () => {
-          it('should foo', function() {
-            const foo = { bar: 123 };
-            foo.quux = foo;
-            expect(foo, 'to equal snapshot');
-          });
-        },
-        'to come out as',
-        function() {
-          it('should foo', function() {
-            const foo = { bar: 123 };
-            foo.quux = foo;
-            expect(
-              foo,
-              'to inspect as snapshot',
-              '{ bar: 123, quux: [Circular] }'
+    describe('when the subject contains a circular reference', function() {
+      it('should switch to "to inspect as snapshot"', function() {
+        return expect(
+          () => {
+            it('should foo', function() {
+              const foo = { bar: 123 };
+              foo.quux = foo;
+              expect(foo, 'to equal snapshot');
+            });
+          },
+          'to come out as',
+          function() {
+            it('should foo', function() {
+              const foo = { bar: 123 };
+              foo.quux = foo;
+              expect(
+                foo,
+                'to inspect as snapshot',
+                '{ bar: 123, quux: [Circular] }'
+              );
+            });
+          }
+        );
+      });
+
+      describe('with a compound assertion', function() {
+        it('should switch to "to inspect as snapshot"', function() {
+          return expect(
+            () => {
+              expect.addAssertion('<any> noop <assertion>', expect =>
+                expect.shift()
+              );
+
+              it('should foo', function() {
+                const foo = { bar: 123 };
+                foo.quux = foo;
+                expect(foo, 'noop to equal snapshot', { bar: 456 });
+              });
+            },
+            'to come out as',
+            function() {
+              expect.addAssertion('<any> noop <assertion>', expect =>
+                expect.shift()
+              );
+
+              it('should foo', function() {
+                const foo = { bar: 123 };
+                foo.quux = foo;
+                expect(
+                  foo,
+                  'noop to inspect as snapshot',
+                  '{ bar: 123, quux: [Circular] }'
+                );
+              });
+            }
+          );
+        });
+
+        describe('and no current snapshot', function() {
+          it('should switch to "to inspect as snapshot"', function() {
+            return expect(
+              () => {
+                expect.addAssertion('<any> noop <assertion>', expect =>
+                  expect.shift()
+                );
+
+                it('should foo', function() {
+                  const foo = { bar: 123 };
+                  foo.quux = foo;
+                  expect(foo, 'noop to equal snapshot');
+                });
+              },
+              'to come out as',
+              function() {
+                expect.addAssertion('<any> noop <assertion>', expect =>
+                  expect.shift()
+                );
+
+                it('should foo', function() {
+                  const foo = { bar: 123 };
+                  foo.quux = foo;
+                  expect(
+                    foo,
+                    'noop to inspect as snapshot',
+                    '{ bar: 123, quux: [Circular] }'
+                  );
+                });
+              }
             );
           });
-        }
-      );
+        });
+      });
     });
 
     it('should switch to "to inspect as snapshot" when the subject contains an object that does not have Object.prototype as its constructor', function() {
