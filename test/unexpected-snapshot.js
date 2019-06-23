@@ -59,14 +59,14 @@ describe('with snapshot updating on', function() {
       '.bin',
       'mocha'
     )} ${fileName}`;
-    const [err, stdout] = await expect.promise.fromNode(cb =>
+    const [err, stdout, stderr] = await expect.promise.fromNode(cb =>
       childProcess.exec(
         testCommand,
         { env: { ...process.env, ...env } },
         cb.bind(null, null)
       )
     );
-    return [err, stdout];
+    return [err, stdout, stderr];
   }
 
   expect.addAssertion(
@@ -95,9 +95,12 @@ describe('with snapshot updating on', function() {
       expect.errorMode = 'nested';
 
       try {
-        const [err, stdout] = await runWithMocha(tmpFileName, {
+        const [err, stdout, stderr] = await runWithMocha(tmpFileName, {
           UNEXPECTED_SNAPSHOT: 'on'
         });
+        if (stderr) {
+          throw new Error(stderr);
+        }
 
         if (err && err.code === 165) {
           throw new Error(`mocha failed with: ${stdout}`);
