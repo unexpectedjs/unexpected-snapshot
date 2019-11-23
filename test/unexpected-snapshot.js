@@ -7,14 +7,19 @@ describe('with snapshot updating on', function() {
   const childProcess = require('child_process');
   const escodegen = require('escodegen');
   const espree = require('espree');
-  const preamble = `var expect = require('unexpected').clone().use(require('${pathModule.resolve(
+  const preamble = `var expect = require('${require.resolve(
+    'unexpected'
+  )}').clone().use(require('${pathModule.resolve(
     __dirname,
     '..',
     'lib',
     'unexpected-snapshot.js'
-  )}'));\n`;
+  )}'));\n// END PREAMBLE\n`;
 
-  const tmpDir = pathModule.resolve(__dirname, 'tmp');
+  const tmpDir = pathModule.resolve(
+    require('os').tmpdir(),
+    `unexpected-snapshot-test-${Date.now()}-${process.pid}`
+  );
 
   before(async () => {
     try {
@@ -90,6 +95,19 @@ describe('with snapshot updating on', function() {
   );
 
   expect.addAssertion(
+    '<any> with prettier enabled <assertion>',
+    async expect => {
+      const prettierRcFileName = pathModule.join(tmpDir, '.prettierrc');
+      await fs.writeFileAsync(prettierRcFileName, '{"singleQuote": true}\n');
+      try {
+        await expect.shift();
+      } finally {
+        await fs.unlinkAsync(prettierRcFileName);
+      }
+    }
+  );
+
+  expect.addAssertion(
     '<string|function> to come out as [exactly] <string|function>',
     async (expect, subject, value) => {
       if (!expect.flags.exactly) {
@@ -111,8 +129,9 @@ describe('with snapshot updating on', function() {
           throw new Error(`mocha failed with: ${stdout}`);
         }
 
-        let output = (await fs.readFileAsync(tmpFileName, 'utf-8')).substr(
-          preamble.length
+        let output = (await fs.readFileAsync(tmpFileName, 'utf-8')).replace(
+          /^[\s\S]*?\/\/ END PREAMBLE\n/,
+          ''
         );
         if (!expect.flags.exactly) {
           output = beautifyJavaScript(output);
@@ -784,6 +803,47 @@ it('should foo', function() {
           fixedSrcs,
           'to have items satisfying to contain',
           `expect('foo', 'to equal snapshot', 'foo');`
+        );
+      });
+    });
+
+    describe('with prettier', function() {
+      it('should not format when there are no updated', function() {
+        return expect(
+          `
+it('should foo', function() {
+  expect('foo',
+'to equal snapshot', 'foo'
+  );
+});
+`,
+          'with prettier enabled to come out as exactly',
+          `
+it('should foo', function() {
+  expect('foo',
+'to equal snapshot', 'foo'
+  );
+});
+`
+        );
+      });
+
+      it('should format the updated file', function() {
+        return expect(
+          `
+it('should foo', function() {
+  expect(
+    'foo',
+'to equal snapshot'
+  );
+});
+      `,
+          'with prettier enabled to come out as exactly',
+          `
+it('should foo', function() {
+  expect('foo', 'to equal snapshot', 'foo');
+});
+`
         );
       });
     });
