@@ -16,7 +16,8 @@
     "test-headless": "npm run build && karma start --single-run",
     "ci": "npm test && npm run test-headless && npm run lint && npm run coverage",
     "coverage": "NODE_ENV=development nyc --reporter=lcov --reporter=text --all -- mocha && echo google-chrome coverage/lcov-report/index.html",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "preversion": "offline-github-changelog --next=${npm_package_version} > CHANGELOG.md && git add CHANGELOG.md"
   },
   "author": "Andreas Lind <andreaslindpetersen@gmail.com>",
   "license": "BSD-3-Clause",
@@ -46,6 +47,7 @@
     "karma-mocha": "^1.3.0",
     "mocha": "^6.0.0",
     "nyc": "^14.0.0",
+    "offline-github-changelog": "^1.6.1",
     "prettier": "~1.19.1",
     "puppeteer": "^2.0.0",
     "rollup": "^1.12.3",

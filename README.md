@@ -42,3 +42,7 @@ expect(something, 'to equal snapshot');
 Note that this recording/injection feature only works when running your tests in
 node.js. The matching against the snapshot works in all test runners, including
 the browser.
+
+## RELEASES
+
+See the [changelog](CHANGELOG.md).
