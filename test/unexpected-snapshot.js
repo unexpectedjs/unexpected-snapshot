@@ -7,14 +7,19 @@ describe('with snapshot updating on', function() {
   const childProcess = require('child_process');
   const escodegen = require('escodegen');
   const espree = require('espree');
-  const preamble = `var expect = require('unexpected').clone().use(require('${pathModule.resolve(
+  const preamble = `var expect = require('${require.resolve(
+    'unexpected'
+  )}').clone().use(require('${pathModule.resolve(
     __dirname,
     '..',
     'lib',
     'unexpected-snapshot.js'
-  )}'));\n`;
+  )}'));\n// END PREAMBLE\n`;
 
-  const tmpDir = pathModule.resolve(__dirname, 'tmp');
+  const tmpDir = pathModule.resolve(
+    require('os').tmpdir(),
+    `unexpected-snapshot-test-${Date.now()}-${process.pid}`
+  );
 
   before(async () => {
     try {
@@ -90,7 +95,7 @@ describe('with snapshot updating on', function() {
   );
 
   expect.addAssertion(
-    '<string|function> to come out as [exactly] <string|function>',
+    '<string|function> [with prettier enabled] to come out as [exactly] <string|function>',
     async (expect, subject, value) => {
       if (!expect.flags.exactly) {
         subject = beautifyJavaScript(subject);
@@ -99,8 +104,16 @@ describe('with snapshot updating on', function() {
       const tmpFileName = await writeTestToTemporaryFile(subject);
       expect.errorMode = 'nested';
 
+      const prettier = expect.flags['with prettier enabled'];
+      let prettierRcFileName;
+      if (prettier) {
+        prettierRcFileName = pathModule.join(tmpDir, '.prettierrc');
+        await fs.writeFileAsync(prettierRcFileName, '{"singleQuote": true}\n');
+      }
+
       try {
         const [err, stdout, stderr] = await runWithMocha(tmpFileName, {
+          UNEXPECTED_SNAPSHOT_PRETTIER: prettier ? 'on' : 'off',
           UNEXPECTED_SNAPSHOT: 'on'
         });
         if (stderr) {
@@ -111,8 +124,9 @@ describe('with snapshot updating on', function() {
           throw new Error(`mocha failed with: ${stdout}`);
         }
 
-        let output = (await fs.readFileAsync(tmpFileName, 'utf-8')).substr(
-          preamble.length
+        let output = (await fs.readFileAsync(tmpFileName, 'utf-8')).replace(
+          /^[\s\S]*?\/\/ END PREAMBLE\n/,
+          ''
         );
         if (!expect.flags.exactly) {
           output = beautifyJavaScript(output);
@@ -128,6 +142,9 @@ describe('with snapshot updating on', function() {
           expect.fail(stdout2);
         }
       } finally {
+        if (prettierRcFileName) {
+          await fs.unlinkAsync(prettierRcFileName);
+        }
         await fs.unlinkAsync(tmpFileName);
       }
     }
@@ -765,8 +782,8 @@ it('should foo', function() {
     describe('with changes due in multiple test files using different instances of the plugin', function() {
       it('should rewrite both files', async function() {
         const src = `
-          it('should foo', function() {
-            expect('foo', 'to equal snapshot');
+          it("should foo", function() {
+            expect("foo", "to equal snapshot");
           });
         `;
         const tmpFileNames = await Promise.all([
@@ -783,7 +800,48 @@ it('should foo', function() {
         expect(
           fixedSrcs,
           'to have items satisfying to contain',
-          `expect('foo', 'to equal snapshot', 'foo');`
+          `expect("foo", "to equal snapshot", "foo");`
+        );
+      });
+    });
+
+    describe('with prettier', function() {
+      it('should not format when there are no updated', function() {
+        return expect(
+          `
+it('should foo', function() {
+  expect('foo',
+'to equal snapshot', 'foo'
+  );
+});
+`,
+          'with prettier enabled to come out as exactly',
+          `
+it('should foo', function() {
+  expect('foo',
+'to equal snapshot', 'foo'
+  );
+});
+`
+        );
+      });
+
+      it('should format the updated file', function() {
+        return expect(
+          `
+it('should foo', function() {
+  expect(
+    'foo',
+'to equal snapshot'
+  );
+});
+      `,
+          'with prettier enabled to come out as exactly',
+          `
+it('should foo', function() {
+  expect('foo', 'to equal snapshot', 'foo');
+});
+`
         );
       });
     });
