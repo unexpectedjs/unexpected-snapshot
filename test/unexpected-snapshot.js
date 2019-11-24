@@ -53,14 +53,17 @@ describe('with snapshot updating on', function() {
     return tmpFileName;
   }
 
-  async function runWithMocha(fileName, env = {}) {
+  async function runWithMocha(fileNames, env = {}) {
+    if (!Array.isArray(fileNames)) {
+      fileNames = [fileNames];
+    }
     const testCommand = `${process.argv[0]} ${pathModule.resolve(
       __dirname,
       '..',
       'node_modules',
       '.bin',
       'mocha'
-    )} ${fileName}`;
+    )} ${fileNames.join(' ')}`;
     const [err, stdout, stderr] = await expect.promise.fromNode(cb =>
       childProcess.exec(
         testCommand,
@@ -755,6 +758,32 @@ it('should foo', function() {
               });
             });
           }
+        );
+      });
+    });
+
+    describe('with changes due in multiple test files using different instances of the plugin', function() {
+      it('should rewrite both files', async function() {
+        const src = `
+          it('should foo', function() {
+            expect('foo', 'to equal snapshot');
+          });
+        `;
+        const tmpFileNames = await Promise.all([
+          writeTestToTemporaryFile(src),
+          writeTestToTemporaryFile(src)
+        ]);
+
+        await runWithMocha(tmpFileNames, {
+          UNEXPECTED_SNAPSHOT: 'on'
+        });
+        const fixedSrcs = await Promise.all(
+          tmpFileNames.map(fileName => fs.readFileAsync(fileName, 'utf-8'))
+        );
+        expect(
+          fixedSrcs,
+          'to have items satisfying to contain',
+          `expect('foo', 'to equal snapshot', 'foo');`
         );
       });
     });
