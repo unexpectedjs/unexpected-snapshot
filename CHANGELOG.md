@@ -1,3 +1,24 @@
+### v0.7.0 (2019-11-24)
+
+#### Pull requests
+
+- [#41](https://github.com/unexpectedjs/unexpected-snapshot/pull/41) Run the fixed source through prettier if available and configured ([Andreas Lind](mailto:andreaslindpetersen@gmail.com))
+- [#42](https://github.com/unexpectedjs/unexpected-snapshot/pull/42) Make sure we write out all fixed files, even when multiple plugin instances are in play ([Andreas Lind](mailto:andreaslindpetersen@gmail.com))
+- [#40](https://github.com/unexpectedjs/unexpected-snapshot/pull/40) Upgrade prettier to version 1.19.1 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+- [#39](https://github.com/unexpectedjs/unexpected-snapshot/pull/39) Upgrade puppeteer to version 2.0.0 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+- [#38](https://github.com/unexpectedjs/unexpected-snapshot/pull/38) Upgrade eslint-plugin-node to version 10.0.0 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+- [#37](https://github.com/unexpectedjs/unexpected-snapshot/pull/37) Upgrade eslint-config-standard to version 14.0.0 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+- [#35](https://github.com/unexpectedjs/unexpected-snapshot/pull/35) Upgrade karma-chrome-launcher to version 3.0.0 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+
+#### Commits to master
+
+- [Add CHANGELOG.md](https://github.com/unexpectedjs/unexpected-snapshot/commit/f6a38fa69c4740a83a3c96c3511964b024cb02b8) ([Andreas Lind](mailto:andreaslindpetersen@gmail.com))
+- [Travis: Run with 'latest' node instead of explicitly 12](https://github.com/unexpectedjs/unexpected-snapshot/commit/2d0d3b737548689e01727b193d250dd07c605587) ([Andreas Lind](mailto:andreaslindpetersen@gmail.com))
+- [Add the entries from .eslintignore to .prettierignore](https://github.com/unexpectedjs/unexpected-snapshot/commit/85a2981e65f469156758dc8d345b1a5df478a09c) ([Andreas Lind](mailto:andreaslindpetersen@gmail.com))
+- [Fix .eslintignore entry for the nyc output dir](https://github.com/unexpectedjs/unexpected-snapshot/commit/164e8840e826d2c168f7fd310fe037605bc8b7c8) ([Andreas Lind](mailto:andreaslindpetersen@gmail.com))
+- [eslint --fix . && prettier --write '\*\*\/\*.js'](https://github.com/unexpectedjs/unexpected-snapshot/commit/14087fccd7620fce98f3052cbf84b929d907ce59) ([Andreas Lind](mailto:andreaslindpetersen@gmail.com))
+- [+8 more](https://github.com/unexpectedjs/unexpected-snapshot/compare/v0.6.0...v0.7.0)
+
 ### v0.6.0 (2019-06-17)
 
 #### Pull requests
