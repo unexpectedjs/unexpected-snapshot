@@ -286,6 +286,38 @@ it('should foo', function() {
       );
     });
 
+    it('should opt out of the expect.unindent mode when a multiline string starts with newlines followed by space', function() {
+      return expect(
+        `
+it('should foo', function() {
+  expect('\\n foo', 'to equal snapshot');
+});
+      `,
+        'to come out as exactly',
+        `
+it('should foo', function() {
+  expect('\\n foo', 'to equal snapshot', '\\n foo');
+});
+      `
+      );
+    });
+
+    it('should opt out of the expect.unindent mode when a multiline string starts with space', function() {
+      return expect(
+        `
+it('should foo', function() {
+  expect(' foo\\n', 'to equal snapshot');
+});
+      `,
+        'to come out as exactly',
+        `
+it('should foo', function() {
+  expect(' foo\\n', 'to equal snapshot', ' foo\\n');
+});
+      `
+      );
+    });
+
     it('should base the indent on the literal being replaced', function() {
       return expect(
         `
