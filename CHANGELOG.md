@@ -1,3 +1,8 @@
+### v0.7.1 (2019-12-11)
+
+- [#44](https://github.com/unexpectedjs/unexpected-snapshot/pull/44) Inspect as a string literal instead of expect.unindent when a multiline string has leading spaces ([Andreas Lind](mailto:andreaslindpetersen@gmail.com))
+- [#43](https://github.com/unexpectedjs/unexpected-snapshot/pull/43) A bit of internal cleanup ([Andreas Lind](mailto:andreaslindpetersen@gmail.com))
+
 ### v0.7.0 (2019-11-24)
 
 #### Pull requests
