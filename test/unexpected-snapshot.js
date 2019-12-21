@@ -934,36 +934,80 @@ it('should foo', function() {
   });
 
   describe('with unassessed', function() {
-    it('should fill in a missing snapshot', function() {
-      return expect(
-        () => {
-          it('should foo', function() {
-            assess('foo').toEqualSnapshot();
-          });
-        },
-        'with unassessed to come out as',
-        () => {
-          it('should foo', function() {
-            assess('foo').toEqualSnapshot('foo');
-          });
-        }
-      );
+    describe('when filling in a missing snapshot', function() {
+      it('should fill in a single-line string', function() {
+        return expect(
+          () => {
+            it('should foo', function() {
+              assess('foo').toEqualSnapshot();
+            });
+          },
+          'with unassessed to come out as',
+          () => {
+            it('should foo', function() {
+              assess('foo').toEqualSnapshot('foo');
+            });
+          }
+        );
+      });
+
+      it('should convert to .toInspectAsSnapshot', function() {
+        return expect(
+          () => {
+            it('should foo', function() {
+              const foo = { bar: 123 };
+              foo.quux = foo;
+              assess(foo).toEqualSnapshot();
+            });
+          },
+          'with unassessed to come out as',
+          () => {
+            it('should foo', function() {
+              const foo = { bar: 123 };
+              foo.quux = foo;
+              assess(foo).toInspectAsSnapshot('{ bar: 123, quux: [Circular] }');
+            });
+          }
+        );
+      });
+
+      it('should fill in a multi-line string', function() {
+        return expect(
+          `
+it('should foo', function() {
+  assess('foo\\nbar\\nbaz').toEqualSnapshot();
+});
+`,
+          'with unassessed to come out as exactly',
+          `
+it('should foo', function() {
+  assess('foo\\nbar\\nbaz').toEqualSnapshot(assess.unindent\`
+    foo
+    bar
+    baz
+  \`);
+});
+`
+        );
+      });
     });
 
-    it('should update an existing snapshot', function() {
-      return expect(
-        () => {
-          it('should foo', function() {
-            assess('foo').toEqualSnapshot('bar');
-          });
-        },
-        'with unassessed to come out as',
-        () => {
-          it('should foo', function() {
-            assess('foo').toEqualSnapshot('foo');
-          });
-        }
-      );
+    describe('when updating an existing snapshot', function() {
+      it('should update with a single-line string', function() {
+        return expect(
+          () => {
+            it('should foo', function() {
+              assess('foo').toEqualSnapshot('bar');
+            });
+          },
+          'with unassessed to come out as',
+          () => {
+            it('should foo', function() {
+              assess('foo').toEqualSnapshot('foo');
+            });
+          }
+        );
+      });
     });
   });
 });
