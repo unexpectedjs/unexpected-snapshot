@@ -55,6 +55,7 @@
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "^5.0.0",
     "rollup-plugin-terser": "^5.0.0",
+    "unassessed": "^0.2.0",
     "unexpected": "^11.1.1"
   },
   "peerDependencies": {
