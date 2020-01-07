@@ -1,3 +1,10 @@
+### v0.8.0 (2020-01-07)
+
+- [#45](https://github.com/unexpectedjs/unexpected-snapshot/pull/45) Support unassessed ([Andreas Lind](mailto:andreaslindpetersen@gmail.com))
+- [#48](https://github.com/unexpectedjs/unexpected-snapshot/pull/48) Upgrade mocha to version 7.0.0 ([Andreas Lind](mailto:andreaslindpetersen@gmail.com), [depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+- [#47](https://github.com/unexpectedjs/unexpected-snapshot/pull/47) Upgrade eslint-plugin-node to version 11.0.0 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+- [#46](https://github.com/unexpectedjs/unexpected-snapshot/pull/46) Upgrade nyc to version 15.0.0 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+
 ### v0.7.1 (2019-12-11)
 
 - [#44](https://github.com/unexpectedjs/unexpected-snapshot/pull/44) Inspect as a string literal instead of expect.unindent when a multiline string has leading spaces ([Andreas Lind](mailto:andreaslindpetersen@gmail.com))
