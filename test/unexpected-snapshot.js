@@ -7,15 +7,24 @@ describe('with snapshot updating on', function() {
   const childProcess = require('child_process');
   const escodegen = require('escodegen');
   const espree = require('espree');
-  const preamble = `var expect = require('${require.resolve(
-    'unexpected'
-  )}').clone().use(require('${pathModule.resolve(
-    __dirname,
-    '..',
-    'lib',
-    'unexpected-snapshot.js'
-  )}'));\n// END PREAMBLE\n`;
-
+  const preambleByType = {
+    unexpected: `var expect = require('${require.resolve(
+      'unexpected'
+    )}').clone().use(require('${pathModule.resolve(
+      __dirname,
+      '..',
+      'lib',
+      'unexpected-snapshot.js'
+    )}'));\n// END PREAMBLE\n`,
+    unassessed: `var assess = require('${require.resolve(
+      'unassessed'
+    )}').withUnexpectedPlugins(require('${pathModule.resolve(
+      __dirname,
+      '..',
+      'lib',
+      'unexpected-snapshot.js'
+    )}'));\n// END PREAMBLE\n`
+  };
   const tmpDir = pathModule.resolve(
     require('os').tmpdir(),
     `unexpected-snapshot-test-${Date.now()}-${process.pid}`
@@ -49,12 +58,12 @@ describe('with snapshot updating on', function() {
     return escodegen.generate(ast, { format: { indent: { style: '  ' } } });
   }
 
-  async function writeTestToTemporaryFile(code) {
+  async function writeTestToTemporaryFile(code, type = 'unexpected') {
     const tmpFileName = pathModule.resolve(
       tmpDir,
       `unexpected-snapshot-${Math.round(10000000 * Math.random())}.js`
     );
-    await fs.writeFileAsync(tmpFileName, preamble + code, 'utf-8');
+    await fs.writeFileAsync(tmpFileName, preambleByType[type] + code, 'utf-8');
     return tmpFileName;
   }
 
@@ -80,13 +89,20 @@ describe('with snapshot updating on', function() {
   }
 
   expect.addAssertion(
-    '<string|function> to come out unaltered',
+    '<string|function> [with unassessed] to come out unaltered',
     async (expect, subject) => {
       subject = beautifyJavaScript(subject);
-      const tmpFileName = await writeTestToTemporaryFile(subject);
+      const type = expect.flags['with unassessed']
+        ? 'unassessed'
+        : 'unexpected';
+      const tmpFileName = await writeTestToTemporaryFile(subject, type);
       await runWithMocha(tmpFileName, {
         UNEXPECTED_SNAPSHOT: 'on'
       });
+      const preamble =
+        preambleByType[
+          expect.flags['with unassessed'] ? 'unassessed' : 'unexpected'
+        ];
       const output = (await fs.readFileAsync(tmpFileName, 'utf-8')).substr(
         preamble.length
       );
@@ -95,13 +111,16 @@ describe('with snapshot updating on', function() {
   );
 
   expect.addAssertion(
-    '<string|function> [with prettier enabled] to come out as [exactly] <string|function>',
+    '<string|function> [with prettier enabled] [with unassessed] to come out as [exactly] <string|function>',
     async (expect, subject, value) => {
       if (!expect.flags.exactly) {
         subject = beautifyJavaScript(subject);
         value = beautifyJavaScript(value);
       }
-      const tmpFileName = await writeTestToTemporaryFile(subject);
+      const type = expect.flags['with unassessed']
+        ? 'unassessed'
+        : 'unexpected';
+      const tmpFileName = await writeTestToTemporaryFile(subject, type);
       expect.errorMode = 'nested';
 
       const prettier = expect.flags['with prettier enabled'];
@@ -247,6 +266,41 @@ describe('with snapshot updating on', function() {
           });
         }
       );
+    });
+
+    describe('with unassessed', function() {
+      /* global assess */
+      it('should fill in a missing snapshot', function() {
+        return expect(
+          () => {
+            it('should foo', function() {
+              assess(['a', 'b', 'c']).toInspectAsSnapshot();
+            });
+          },
+          'with unassessed to come out as',
+          () => {
+            it('should foo', function() {
+              assess(['a', 'b', 'c']).toInspectAsSnapshot("[ 'a', 'b', 'c' ]");
+            });
+          }
+        );
+      });
+
+      it('should update incorrect snapshots', function() {
+        return expect(
+          () => {
+            it('should foo', function() {
+              assess(['a', 'b', 'c']).toInspectAsSnapshot("['a', 'b', 'c']");
+            });
+          },
+          'with unassessed to come out as',
+          () => {
+            it('should foo', function() {
+              assess(['a', 'b', 'c']).toInspectAsSnapshot("[ 'a', 'b', 'c' ]");
+            });
+          }
+        );
+      });
     });
   });
 
@@ -874,6 +928,84 @@ it('should foo', function() {
   expect('foo', 'to equal snapshot', 'foo');
 });
 `
+        );
+      });
+    });
+  });
+
+  describe('with unassessed', function() {
+    describe('when filling in a missing snapshot', function() {
+      it('should fill in a single-line string', function() {
+        return expect(
+          () => {
+            it('should foo', function() {
+              assess('foo').toEqualSnapshot();
+            });
+          },
+          'with unassessed to come out as',
+          () => {
+            it('should foo', function() {
+              assess('foo').toEqualSnapshot('foo');
+            });
+          }
+        );
+      });
+
+      it('should convert to .toInspectAsSnapshot', function() {
+        return expect(
+          () => {
+            it('should foo', function() {
+              const foo = { bar: 123 };
+              foo.quux = foo;
+              assess(foo).toEqualSnapshot();
+            });
+          },
+          'with unassessed to come out as',
+          () => {
+            it('should foo', function() {
+              const foo = { bar: 123 };
+              foo.quux = foo;
+              assess(foo).toInspectAsSnapshot('{ bar: 123, quux: [Circular] }');
+            });
+          }
+        );
+      });
+
+      it('should fill in a multi-line string', function() {
+        return expect(
+          `
+it('should foo', function() {
+  assess('foo\\nbar\\nbaz').toEqualSnapshot();
+});
+`,
+          'with unassessed to come out as exactly',
+          `
+it('should foo', function() {
+  assess('foo\\nbar\\nbaz').toEqualSnapshot(assess.unindent\`
+    foo
+    bar
+    baz
+  \`);
+});
+`
+        );
+      });
+    });
+
+    describe('when updating an existing snapshot', function() {
+      it('should update with a single-line string', function() {
+        return expect(
+          () => {
+            it('should foo', function() {
+              assess('foo').toEqualSnapshot('bar');
+            });
+          },
+          'with unassessed to come out as',
+          () => {
+            it('should foo', function() {
+              assess('foo').toEqualSnapshot('foo');
+            });
+          }
         );
       });
     });
