@@ -1,3 +1,8 @@
+### v1.0.0 (2020-02-07)
+
+- [Drop node.js 8 support](https://github.com/unexpectedjs/unexpected-snapshot/commit/c9b0f59fec9e8280eff6db9d87d1367ba66bf458) ([Andreas Lind](mailto:andreas.lind@peakon.com))
+- [Use the pretty-maybe module](https://github.com/unexpectedjs/unexpected-snapshot/commit/013e0043dce1cfb72ecb63ef2f343b27197aec1d) ([Andreas Lind](mailto:andreaslindpetersen@gmail.com))
+
 ### v0.8.0 (2020-01-07)
 
 - [#45](https://github.com/unexpectedjs/unexpected-snapshot/pull/45) Support unassessed ([Andreas Lind](mailto:andreaslindpetersen@gmail.com))
