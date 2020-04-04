@@ -1,6 +1,6 @@
 /* eslint-disable mocha/no-nested-tests, mocha/no-identical-title */
 
-describe('with snapshot updating on', function() {
+describe('with snapshot updating on', function () {
   const expect = require('unexpected').clone();
   const pathModule = require('path');
   const fs = expect.promise.promisifyAll(require('fs'));
@@ -23,7 +23,7 @@ describe('with snapshot updating on', function() {
       '..',
       'lib',
       'unexpected-snapshot.js'
-    )}'));\n// END PREAMBLE\n`
+    )}'));\n// END PREAMBLE\n`,
   };
   const tmpDir = pathModule.resolve(
     require('os').tmpdir(),
@@ -50,7 +50,7 @@ describe('with snapshot updating on', function() {
       ast = {
         type: 'Program',
         body: espree.parse(`(${value.toString()})`, parserOptions).body[0]
-          .expression.body.body
+          .expression.body.body,
       };
     } else {
       ast = value;
@@ -78,7 +78,7 @@ describe('with snapshot updating on', function() {
       '.bin',
       'mocha'
     )} ${fileNames.join(' ')}`;
-    const [err, stdout, stderr] = await expect.promise.fromNode(cb =>
+    const [err, stdout, stderr] = await expect.promise.fromNode((cb) =>
       childProcess.exec(
         testCommand,
         { env: { ...process.env, ...env } },
@@ -97,7 +97,7 @@ describe('with snapshot updating on', function() {
         : 'unexpected';
       const tmpFileName = await writeTestToTemporaryFile(subject, type);
       await runWithMocha(tmpFileName, {
-        UNEXPECTED_SNAPSHOT: 'on'
+        UNEXPECTED_SNAPSHOT: 'on',
       });
       const preamble =
         preambleByType[
@@ -133,7 +133,7 @@ describe('with snapshot updating on', function() {
       try {
         const [err, stdout, stderr] = await runWithMocha(tmpFileName, {
           UNEXPECTED_SNAPSHOT_PRETTIER: prettier ? 'on' : 'off',
-          UNEXPECTED_SNAPSHOT: 'on'
+          UNEXPECTED_SNAPSHOT: 'on',
         });
         if (stderr) {
           throw new Error(stderr);
@@ -170,16 +170,16 @@ describe('with snapshot updating on', function() {
   );
 
   describe('inspect as snapshot', () => {
-    it('should fill in a missing snapshot', function() {
+    it('should fill in a missing snapshot', function () {
       return expect(
         () => {
-          it('should foo', function() {
+          it('should foo', function () {
             expect(['a', 'b', 'c'], 'to inspect as snapshot');
           });
         },
         'to come out as',
         () => {
-          it('should foo', function() {
+          it('should foo', function () {
             expect(
               ['a', 'b', 'c'],
               'to inspect as snapshot',
@@ -190,10 +190,10 @@ describe('with snapshot updating on', function() {
       );
     });
 
-    it('should update incorrect snapshots', function() {
+    it('should update incorrect snapshots', function () {
       return expect(
         () => {
-          it('should foo', function() {
+          it('should foo', function () {
             expect(
               ['a', 'b', 'c'],
               'to inspect as snapshot',
@@ -203,7 +203,7 @@ describe('with snapshot updating on', function() {
         },
         'to come out as',
         () => {
-          it('should foo', function() {
+          it('should foo', function () {
             expect(
               ['a', 'b', 'c'],
               'to inspect as snapshot',
@@ -217,7 +217,7 @@ describe('with snapshot updating on', function() {
     it('supports inspected snapshots on shifted subjects', () => {
       return expect(
         () => {
-          it('should foo', function() {
+          it('should foo', function () {
             expect(
               ['c', 'a', 'b'],
               'when sorted',
@@ -228,7 +228,7 @@ describe('with snapshot updating on', function() {
         },
         'to come out as',
         () => {
-          it('should foo', function() {
+          it('should foo', function () {
             expect(
               ['c', 'a', 'b'],
               'when sorted',
@@ -243,10 +243,10 @@ describe('with snapshot updating on', function() {
     it('inspects with infinite depth', () => {
       return expect(
         () => {
-          it('should foo', function() {
+          it('should foo', function () {
             expect(
               {
-                down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } }
+                down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } },
               },
               'to inspect as snapshot',
               '{ down: { the: { rabbit: { hole: {} } } } }'
@@ -255,10 +255,10 @@ describe('with snapshot updating on', function() {
         },
         'to come out as',
         () => {
-          it('should foo', function() {
+          it('should foo', function () {
             expect(
               {
-                down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } }
+                down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } },
               },
               'to inspect as snapshot',
               "{ down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } } }"
@@ -268,34 +268,34 @@ describe('with snapshot updating on', function() {
       );
     });
 
-    describe('with unassessed', function() {
+    describe('with unassessed', function () {
       /* global assess */
-      it('should fill in a missing snapshot', function() {
+      it('should fill in a missing snapshot', function () {
         return expect(
           () => {
-            it('should foo', function() {
+            it('should foo', function () {
               assess(['a', 'b', 'c']).toInspectAsSnapshot();
             });
           },
           'with unassessed to come out as',
           () => {
-            it('should foo', function() {
+            it('should foo', function () {
               assess(['a', 'b', 'c']).toInspectAsSnapshot("[ 'a', 'b', 'c' ]");
             });
           }
         );
       });
 
-      it('should update incorrect snapshots', function() {
+      it('should update incorrect snapshots', function () {
         return expect(
           () => {
-            it('should foo', function() {
+            it('should foo', function () {
               assess(['a', 'b', 'c']).toInspectAsSnapshot("['a', 'b', 'c']");
             });
           },
           'with unassessed to come out as',
           () => {
-            it('should foo', function() {
+            it('should foo', function () {
               assess(['a', 'b', 'c']).toInspectAsSnapshot("[ 'a', 'b', 'c' ]");
             });
           }
@@ -304,8 +304,8 @@ describe('with snapshot updating on', function() {
     });
   });
 
-  describe('to equal snapshot', function() {
-    it('should fill in a missing single line string', function() {
+  describe('to equal snapshot', function () {
+    it('should fill in a missing single line string', function () {
       return expect(
         `
 it('should foo', function() {
@@ -321,7 +321,7 @@ it('should foo', function() {
       );
     });
 
-    it('should fill in a missing string with a trailing newline', function() {
+    it('should fill in a missing string with a trailing newline', function () {
       return expect(
         `
 it('should foo', function() {
@@ -340,7 +340,7 @@ it('should foo', function() {
       );
     });
 
-    it('should opt out of the expect.unindent mode when a multiline string starts with newlines followed by space', function() {
+    it('should opt out of the expect.unindent mode when a multiline string starts with newlines followed by space', function () {
       return expect(
         `
 it('should foo', function() {
@@ -356,7 +356,7 @@ it('should foo', function() {
       );
     });
 
-    it('should opt out of the expect.unindent mode when a multiline string starts with space', function() {
+    it('should opt out of the expect.unindent mode when a multiline string starts with space', function () {
       return expect(
         `
 it('should foo', function() {
@@ -372,7 +372,7 @@ it('should foo', function() {
       );
     });
 
-    it('should base the indent on the literal being replaced', function() {
+    it('should base the indent on the literal being replaced', function () {
       return expect(
         `
 it('should foo', function() {
@@ -396,7 +396,7 @@ it('should foo', function() {
       );
     });
 
-    it('should escape backticks in injected multiline snapshot', function() {
+    it('should escape backticks in injected multiline snapshot', function () {
       return expect(
         `
 it('should foo', function() {
@@ -423,8 +423,8 @@ it('should foo', function() {
       );
     });
 
-    describe('with a multi line string', function() {
-      it('should inject a template string with indentation', function() {
+    describe('with a multi line string', function () {
+      it('should inject a template string with indentation', function () {
         return expect(
           `
 it('should foo', function() {
@@ -443,7 +443,7 @@ it('should foo', function() {
         );
       });
 
-      it('should inject a template string at 3x2 space indent', function() {
+      it('should inject a template string at 3x2 space indent', function () {
         return expect(
           `
 if (true) {
@@ -466,7 +466,7 @@ if (true) {
         );
       });
 
-      it('should inject a template string at 3x4 space indent', function() {
+      it('should inject a template string at 3x4 space indent', function () {
         return expect(
           `
 if (true) {
@@ -490,7 +490,7 @@ if (true) {
       });
     });
 
-    it('should update a mismatching string', function() {
+    it('should update a mismatching string', function () {
       return expect(
         `
 it('should foo', function() {
@@ -508,7 +508,7 @@ it('should foo', function() {
       );
     });
 
-    it('should update a mismatching oneline string', function() {
+    it('should update a mismatching oneline string', function () {
       return expect(
         `
 it('should foo', function() {
@@ -524,7 +524,7 @@ it('should foo', function() {
       );
     });
 
-    it('should not precede empty lines with spaces', function() {
+    it('should not precede empty lines with spaces', function () {
       return expect(
         `
 it('should foo', function() {
@@ -544,7 +544,7 @@ it('should foo', function() {
       );
     });
 
-    it('should indent whitespace-only lines', function() {
+    it('should indent whitespace-only lines', function () {
       // The last space is escaped as \x20 to avoid being
       // in conflict with .editorconfig
       return expect(
@@ -566,51 +566,51 @@ it('should foo', function() {
       );
     });
 
-    it('should fill in a missing object', function() {
+    it('should fill in a missing object', function () {
       return expect(
         () => {
-          it('should foo', function() {
+          it('should foo', function () {
             expect({ foo: 'bar' }, 'to equal snapshot');
           });
         },
         'to come out as',
         () => {
-          it('should foo', function() {
+          it('should foo', function () {
             expect({ foo: 'bar' }, 'to equal snapshot', { foo: 'bar' });
           });
         }
       );
     });
 
-    it('should fill in a missing array', function() {
+    it('should fill in a missing array', function () {
       return expect(
         () => {
-          it('should foo', function() {
+          it('should foo', function () {
             expect([123, 'abc'], 'to equal snapshot');
           });
         },
         'to come out as',
         () => {
-          it('should foo', function() {
+          it('should foo', function () {
             expect([123, 'abc'], 'to equal snapshot', [123, 'abc']);
           });
         }
       );
     });
 
-    describe('when the subject contains a circular reference', function() {
-      it('should switch to "to inspect as snapshot"', function() {
+    describe('when the subject contains a circular reference', function () {
+      it('should switch to "to inspect as snapshot"', function () {
         return expect(
           () => {
-            it('should foo', function() {
+            it('should foo', function () {
               const foo = { bar: 123 };
               foo.quux = foo;
               expect(foo, 'to equal snapshot');
             });
           },
           'to come out as',
-          function() {
-            it('should foo', function() {
+          function () {
+            it('should foo', function () {
               const foo = { bar: 123 };
               foo.quux = foo;
               expect(
@@ -623,27 +623,27 @@ it('should foo', function() {
         );
       });
 
-      describe('with a compound assertion', function() {
-        it('should switch to "to inspect as snapshot"', function() {
+      describe('with a compound assertion', function () {
+        it('should switch to "to inspect as snapshot"', function () {
           return expect(
             () => {
-              expect.addAssertion('<any> noop <assertion>', expect =>
+              expect.addAssertion('<any> noop <assertion>', (expect) =>
                 expect.shift()
               );
 
-              it('should foo', function() {
+              it('should foo', function () {
                 const foo = { bar: 123 };
                 foo.quux = foo;
                 expect(foo, 'noop to equal snapshot', { bar: 456 });
               });
             },
             'to come out as',
-            function() {
-              expect.addAssertion('<any> noop <assertion>', expect =>
+            function () {
+              expect.addAssertion('<any> noop <assertion>', (expect) =>
                 expect.shift()
               );
 
-              it('should foo', function() {
+              it('should foo', function () {
                 const foo = { bar: 123 };
                 foo.quux = foo;
                 expect(
@@ -656,27 +656,27 @@ it('should foo', function() {
           );
         });
 
-        describe('and no current snapshot', function() {
-          it('should switch to "to inspect as snapshot"', function() {
+        describe('and no current snapshot', function () {
+          it('should switch to "to inspect as snapshot"', function () {
             return expect(
               () => {
-                expect.addAssertion('<any> noop <assertion>', expect =>
+                expect.addAssertion('<any> noop <assertion>', (expect) =>
                   expect.shift()
                 );
 
-                it('should foo', function() {
+                it('should foo', function () {
                   const foo = { bar: 123 };
                   foo.quux = foo;
                   expect(foo, 'noop to equal snapshot');
                 });
               },
               'to come out as',
-              function() {
-                expect.addAssertion('<any> noop <assertion>', expect =>
+              function () {
+                expect.addAssertion('<any> noop <assertion>', (expect) =>
                   expect.shift()
                 );
 
-                it('should foo', function() {
+                it('should foo', function () {
                   const foo = { bar: 123 };
                   foo.quux = foo;
                   expect(
@@ -692,10 +692,10 @@ it('should foo', function() {
       });
     });
 
-    it('should switch to "to inspect as snapshot" when the subject contains an object that does not have Object.prototype as its constructor', function() {
+    it('should switch to "to inspect as snapshot" when the subject contains an object that does not have Object.prototype as its constructor', function () {
       return expect(
         () => {
-          it('should foo', function() {
+          it('should foo', function () {
             function Person(name) {
               this.name = name;
             }
@@ -703,8 +703,8 @@ it('should foo', function() {
           });
         },
         'to come out as',
-        function() {
-          it('should foo', function() {
+        function () {
+          it('should foo', function () {
             function Person(name) {
               this.name = name;
             }
@@ -718,10 +718,10 @@ it('should foo', function() {
       );
     });
 
-    it('should support injecting certain safe built-in types in a literal snapshot', function() {
+    it('should support injecting certain safe built-in types in a literal snapshot', function () {
       return expect(
         () => {
-          it('should foo', function() {
+          it('should foo', function () {
             expect(
               {
                 date: new Date('2019-05-09T12:34:56.789Z'),
@@ -731,7 +731,7 @@ it('should foo', function() {
                 NaN: NaN,
                 Infinity: Infinity,
                 number: 123.456,
-                regexp: /abc(?:)/gim
+                regexp: /abc(?:)/gim,
               },
               'to equal snapshot'
             );
@@ -739,7 +739,7 @@ it('should foo', function() {
         },
         'to come out as',
         () => {
-          it('should foo', function() {
+          it('should foo', function () {
             expect(
               {
                 date: new Date('2019-05-09T12:34:56.789Z'),
@@ -749,7 +749,7 @@ it('should foo', function() {
                 NaN: NaN,
                 Infinity: Infinity,
                 number: 123.456,
-                regexp: /abc(?:)/gim
+                regexp: /abc(?:)/gim,
               },
               'to equal snapshot',
               {
@@ -760,7 +760,7 @@ it('should foo', function() {
                 NaN: NaN,
                 Infinity: Infinity,
                 number: 123.456,
-                regexp: /abc(?:)/gim
+                regexp: /abc(?:)/gim,
               }
             );
           });
@@ -771,20 +771,20 @@ it('should foo', function() {
     it('supports matching snapshots on shifted subjects', () => {
       return expect(
         () => {
-          it('should foo', function() {
+          it('should foo', function () {
             expect(['c', 'a', 'b'], 'when sorted', 'to equal snapshot', [
               'a',
-              'b'
+              'b',
             ]);
           });
         },
         'to come out as',
         () => {
-          it('should foo', function() {
+          it('should foo', function () {
             expect(['c', 'a', 'b'], 'when sorted', 'to equal snapshot', [
               'a',
               'b',
-              'c'
+              'c',
             ]);
           });
         }
@@ -794,10 +794,10 @@ it('should foo', function() {
     it('inspects with infinite depth', () => {
       return expect(
         () => {
-          it('should foo', function() {
+          it('should foo', function () {
             expect(
               {
-                down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } }
+                down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } },
               },
               'to equal snapshot',
               { down: { the: { rabbit: { hole: {} } } } }
@@ -806,14 +806,14 @@ it('should foo', function() {
         },
         'to come out as',
         () => {
-          it('should foo', function() {
+          it('should foo', function () {
             expect(
               {
-                down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } }
+                down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } },
               },
               'to equal snapshot',
               {
-                down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } }
+                down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } },
               }
             );
           });
@@ -821,43 +821,43 @@ it('should foo', function() {
       );
     });
 
-    describe.skip('with expect.it', function() {
-      it('should fill in a missing string', function() {
+    describe.skip('with expect.it', function () {
+      it('should fill in a missing string', function () {
         return expect(
           () => {
-            it('should foo', function() {
+            it('should foo', function () {
               expect({ bar: 'foo' }, 'to satisfy', {
-                bar: expect.it('to equal snapshot')
+                bar: expect.it('to equal snapshot'),
               });
             });
           },
           'to come out as',
           () => {
-            it('should foo', function() {
+            it('should foo', function () {
               expect({ bar: 'foo' }, 'to satisfy', {
-                bar: expect.it('to equal snapshot', 'foo')
+                bar: expect.it('to equal snapshot', 'foo'),
               });
             });
           }
         );
       });
 
-      it('should fill in a missing object', function() {
+      it('should fill in a missing object', function () {
         return expect(
           () => {
-            it('should foo', function() {
+            it('should foo', function () {
               expect({ foo: { bar: 'quux' } }, 'to satisfy', {
-                foo: expect.it('to equal snapshot')
+                foo: expect.it('to equal snapshot'),
               });
             });
           },
           'to come out as',
           () => {
-            it('should foo', function() {
+            it('should foo', function () {
               expect({ foo: { bar: 'quux' } }, 'to satisfy', {
                 foo: expect.it('to equal snapshot', {
-                  bar: 'quux'
-                })
+                  bar: 'quux',
+                }),
               });
             });
           }
@@ -865,8 +865,8 @@ it('should foo', function() {
       });
     });
 
-    describe('with changes due in multiple test files using different instances of the plugin', function() {
-      it('should rewrite both files', async function() {
+    describe('with changes due in multiple test files using different instances of the plugin', function () {
+      it('should rewrite both files', async function () {
         const src = `
           it("should foo", function() {
             expect("foo", "to equal snapshot");
@@ -874,14 +874,14 @@ it('should foo', function() {
         `;
         const tmpFileNames = await Promise.all([
           writeTestToTemporaryFile(src),
-          writeTestToTemporaryFile(src)
+          writeTestToTemporaryFile(src),
         ]);
 
         await runWithMocha(tmpFileNames, {
-          UNEXPECTED_SNAPSHOT: 'on'
+          UNEXPECTED_SNAPSHOT: 'on',
         });
         const fixedSrcs = await Promise.all(
-          tmpFileNames.map(fileName => fs.readFileAsync(fileName, 'utf-8'))
+          tmpFileNames.map((fileName) => fs.readFileAsync(fileName, 'utf-8'))
         );
         expect(
           fixedSrcs,
@@ -891,8 +891,8 @@ it('should foo', function() {
       });
     });
 
-    describe('with prettier', function() {
-      it('should not format when there are no updated', function() {
+    describe('with prettier', function () {
+      it('should not format when there are no updated', function () {
         return expect(
           `
 it('should foo', function() {
@@ -912,7 +912,7 @@ it('should foo', function() {
         );
       });
 
-      it('should format the updated file', function() {
+      it('should format the updated file', function () {
         return expect(
           `
 it('should foo', function() {
@@ -933,28 +933,28 @@ it('should foo', function() {
     });
   });
 
-  describe('with unassessed', function() {
-    describe('when filling in a missing snapshot', function() {
-      it('should fill in a single-line string', function() {
+  describe('with unassessed', function () {
+    describe('when filling in a missing snapshot', function () {
+      it('should fill in a single-line string', function () {
         return expect(
           () => {
-            it('should foo', function() {
+            it('should foo', function () {
               assess('foo').toEqualSnapshot();
             });
           },
           'with unassessed to come out as',
           () => {
-            it('should foo', function() {
+            it('should foo', function () {
               assess('foo').toEqualSnapshot('foo');
             });
           }
         );
       });
 
-      it('should convert to .toInspectAsSnapshot', function() {
+      it('should convert to .toInspectAsSnapshot', function () {
         return expect(
           () => {
-            it('should foo', function() {
+            it('should foo', function () {
               const foo = { bar: 123 };
               foo.quux = foo;
               assess(foo).toEqualSnapshot();
@@ -962,7 +962,7 @@ it('should foo', function() {
           },
           'with unassessed to come out as',
           () => {
-            it('should foo', function() {
+            it('should foo', function () {
               const foo = { bar: 123 };
               foo.quux = foo;
               assess(foo).toInspectAsSnapshot('{ bar: 123, quux: [Circular] }');
@@ -971,7 +971,7 @@ it('should foo', function() {
         );
       });
 
-      it('should fill in a multi-line string', function() {
+      it('should fill in a multi-line string', function () {
         return expect(
           `
 it('should foo', function() {
@@ -992,17 +992,17 @@ it('should foo', function() {
       });
     });
 
-    describe('when updating an existing snapshot', function() {
-      it('should update with a single-line string', function() {
+    describe('when updating an existing snapshot', function () {
+      it('should update with a single-line string', function () {
         return expect(
           () => {
-            it('should foo', function() {
+            it('should foo', function () {
               assess('foo').toEqualSnapshot('bar');
             });
           },
           'with unassessed to come out as',
           () => {
-            it('should foo', function() {
+            it('should foo', function () {
               assess('foo').toEqualSnapshot('foo');
             });
           }
@@ -1012,12 +1012,10 @@ it('should foo', function() {
   });
 });
 
-describe('with snapshot updating off', function() {
-  const expect = require('unexpected')
-    .clone()
-    .use(require('..'));
+describe('with snapshot updating off', function () {
+  const expect = require('unexpected').clone().use(require('..'));
 
-  describe('to equal snapshot', function() {
+  describe('to equal snapshot', function () {
     it('fails if a snapshot is not given', () => {
       expect(
         () => {
@@ -1059,7 +1057,7 @@ describe('with snapshot updating off', function() {
     });
   });
 
-  describe('to inspect as snapshot', function() {
+  describe('to inspect as snapshot', function () {
     it('fails if a snapshot is not given', () => {
       expect(
         () => {

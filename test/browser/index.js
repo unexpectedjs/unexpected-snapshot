@@ -2,13 +2,13 @@
 
 const expect = weknowhow.expect.clone().use(unexpectedSnapshot);
 
-describe('unexpected-snapshot', function() {
-  describe('to equal snapshot', function() {
-    it('should succeed', function() {
+describe('unexpected-snapshot', function () {
+  describe('to equal snapshot', function () {
+    it('should succeed', function () {
       expect('abc', 'to equal snapshot', 'abc');
     });
 
-    it('should fail with a diff', function() {
+    it('should fail with a diff', function () {
       expect(
         () => expect('abc', 'to equal snapshot', 'def'),
         'to throw',
@@ -22,12 +22,12 @@ describe('unexpected-snapshot', function() {
     });
   });
 
-  describe('to inspect as snapshot', function() {
+  describe('to inspect as snapshot', function () {
     function Person(name) {
       this.name = name;
     }
 
-    it('should succeed', function() {
+    it('should succeed', function () {
       expect(
         new Person('Eigil'),
         'to inspect as snapshot',
@@ -35,7 +35,7 @@ describe('unexpected-snapshot', function() {
       );
     });
 
-    it('should fail with a diff', function() {
+    it('should fail with a diff', function () {
       expect(
         () =>
           expect(
