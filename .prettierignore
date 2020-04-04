@@ -4,3 +4,6 @@ package.json
 /build/
 /coverage/
 /.nyc_output/
+
+# Generated
+/CHANGELOG.md
