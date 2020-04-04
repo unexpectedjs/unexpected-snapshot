@@ -924,7 +924,7 @@ it('should foo', function() {
       `,
           'with prettier enabled to come out as exactly',
           `
-it('should foo', function() {
+it('should foo', function () {
   expect('foo', 'to equal snapshot', 'foo');
 });
 `
