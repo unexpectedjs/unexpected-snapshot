@@ -1,7 +1,7 @@
 {
   "name": "unexpected-snapshot",
   "version": "1.0.0",
-  "description": "",
+  "description": "Add inline snapshotting powers to the Unexpected assertion library",
   "main": "lib/unexpected-snapshot.js",
   "browser": "unexpected-snapshot-browser.js",
   "files": [
@@ -10,12 +10,12 @@
     "unexpected-snapshot-browser.js.map"
   ],
   "scripts": {
-    "lint": "eslint . && prettier --check '**/*.js'",
+    "lint": "eslint . && prettier --check '**/*.{js,md}'",
     "test": "mocha",
     "build": "./build.sh",
     "test-headless": "npm run build && karma start --single-run",
-    "ci": "npm test && npm run test-headless && npm run lint && npm run coverage",
-    "coverage": "NODE_ENV=development nyc --reporter=lcov --reporter=text --all -- mocha && echo google-chrome coverage/lcov-report/index.html",
+    "test:ci": "npm run coverage && npm run test-headless",
+    "coverage": "nyc --reporter=lcov --reporter=text --all -- mocha && echo google-chrome coverage/lcov-report/index.html",
     "prepublishOnly": "npm run build",
     "preversion": "offline-github-changelog --next=${npm_package_version} > CHANGELOG.md && git add CHANGELOG.md"
   },
