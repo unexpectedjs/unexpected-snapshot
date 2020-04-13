@@ -1,3 +1,8 @@
+### v1.0.2 (2020-04-13)
+
+- [Add vscode debugger launch config for the test suite](https://github.com/unexpectedjs/unexpected-snapshot/commit/12d39962a8a4cac1d419077e180a96dd5551c1ed) ([Andreas Lind](mailto:andreas.lind@peakon.com))
+- [Try to error out nicely when expect.it seems to be in play](https://github.com/unexpectedjs/unexpected-snapshot/commit/bca2294d318fda6c7c653cba424cf86f37e8d3b4) ([Andreas Lind](mailto:andreas.lind@peakon.com))
+
 ### v1.0.1 (2020-04-13)
 
 #### Pull requests
