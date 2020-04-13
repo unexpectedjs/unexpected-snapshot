@@ -1,3 +1,16 @@
+### v1.0.1 (2020-04-13)
+
+#### Pull requests
+
+- [#55](https://github.com/unexpectedjs/unexpected-snapshot/pull/55) Upgrade karma to version 5.0.1 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+- [#54](https://github.com/unexpectedjs/unexpected-snapshot/pull/54) Upgrade buble to version 0.20.0 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+- [#51](https://github.com/unexpectedjs/unexpected-snapshot/pull/51) Upgrade rollup to version 2.0.3 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+
+#### Commits to master
+
+- [Escape dollar signs when injecting expect.unindent`...`](https://github.com/unexpectedjs/unexpected-snapshot/commit/03f76f5fb0ab206994185cf77f09ab6cf0c1de8b) ([Andreas Lind](mailto:andreas.lind@peakon.com))
+- [Fix test that was sensitive to the prettier update](https://github.com/unexpectedjs/unexpected-snapshot/commit/734a4876218890a3f0ee91a78566504bfce4a35c) ([Andreas Lind](mailto:andreas.lind@peakon.com))
+
 ### v1.0.0 (2020-02-07)
 
 - [Drop node.js 8 support](https://github.com/unexpectedjs/unexpected-snapshot/commit/c9b0f59fec9e8280eff6db9d87d1367ba66bf458) ([Andreas Lind](mailto:andreas.lind@peakon.com))
