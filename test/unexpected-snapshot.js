@@ -340,6 +340,25 @@ it('should foo', function() {
       );
     });
 
+    it('should fill in a missing string with a dollar sign', function () {
+      return expect(
+        `
+it('should foo', function() {
+  expect('\\\${foo}\\n', 'to equal snapshot');
+});
+      `,
+        'to come out as exactly',
+        `
+it('should foo', function() {
+  expect('\\\${foo}\\n', 'to equal snapshot', expect.unindent\`
+    \\\${foo}
+
+  \`);
+});
+      `
+      );
+    });
+
     it('should opt out of the expect.unindent mode when a multiline string starts with newlines followed by space', function () {
       return expect(
         `
