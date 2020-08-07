@@ -35,7 +35,7 @@
   "devDependencies": {
     "buble": "^0.20.0",
     "coveralls": "^3.0.2",
-    "escodegen": "^1.11.1",
+    "escodegen": "^2.0.0",
     "eslint-config-prettier": "^6.0.0",
     "eslint-config-standard": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
