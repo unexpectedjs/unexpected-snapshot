@@ -1,3 +1,30 @@
+### v1.1.0 (2020-11-19)
+
+#### Pull requests
+
+- [#74](https://github.com/unexpectedjs/unexpected-snapshot/pull/74) Upgrade offline-github-changelog to version 2.0.0 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+- [#73](https://github.com/unexpectedjs/unexpected-snapshot/pull/73) Upgrade eslint-config-standard to version 16.0.1 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+- [#71](https://github.com/unexpectedjs/unexpected-snapshot/pull/71) Upgrade eslint-config-standard to version 15.0.0 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+- [#70](https://github.com/unexpectedjs/unexpected-snapshot/pull/70) Upgrade prettier to version 2.1.0 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+- [#69](https://github.com/unexpectedjs/unexpected-snapshot/pull/69) Upgrade rollup-plugin-terser to version 7.0.0 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+- [#68](https://github.com/unexpectedjs/unexpected-snapshot/pull/68) Upgrade eslint-plugin-mocha to version 8.0.0 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+- [#67](https://github.com/unexpectedjs/unexpected-snapshot/pull/67) Upgrade escodegen to version 2.0.0 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+- [#66](https://github.com/unexpectedjs/unexpected-snapshot/pull/66) Upgrade puppeteer to version 5.0.0 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+- [#65](https://github.com/unexpectedjs/unexpected-snapshot/pull/65) Upgrade puppeteer to version 4.0.0 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+- [#64](https://github.com/unexpectedjs/unexpected-snapshot/pull/64) Upgrade mocha to version 8.0.1 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+- [#63](https://github.com/unexpectedjs/unexpected-snapshot/pull/63) Upgrade rollup-plugin-terser to version 6.0.1 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+- [#62](https://github.com/unexpectedjs/unexpected-snapshot/pull/62) Upgrade eslint-plugin-mocha to version 7.0.0 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+- [#61](https://github.com/unexpectedjs/unexpected-snapshot/pull/61) Upgrade eslint to version 7.0.0 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+- [#60](https://github.com/unexpectedjs/unexpected-snapshot/pull/60) Upgrade espree to version 7.0.0 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+- [#59](https://github.com/unexpectedjs/unexpected-snapshot/pull/59) Upgrade puppeteer to version 3.0.0 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+- [#58](https://github.com/unexpectedjs/unexpected-snapshot/pull/58) Upgrade karma-mocha to version 2.0.0 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+
+#### Commits to master
+
+- [Accept unexpected ^12.0.0 as a peer dep](https://github.com/unexpectedjs/unexpected-snapshot/commit/3b8739b6d08035048f58d077b9453c65ec9c12d7) ([Andreas Lind](mailto:andreaslindpetersen@gmail.com))
+- [Update unexpected to ^12.0.0](https://github.com/unexpectedjs/unexpected-snapshot/commit/496b9572a8fdd1c012093086caa250657642771a) ([Andreas Lind](mailto:andreaslindpetersen@gmail.com))
+- [Build with node.js 14](https://github.com/unexpectedjs/unexpected-snapshot/commit/2f7ab0991d8e335815a132ac28efec4006ce0992) ([Andreas Lind](mailto:andreaslindpetersen@gmail.com))
+
 ### v1.0.2 (2020-04-13)
 
 - [Add vscode debugger launch config for the test suite](https://github.com/unexpectedjs/unexpected-snapshot/commit/12d39962a8a4cac1d419077e180a96dd5551c1ed) ([Andreas Lind](mailto:andreas.lind@peakon.com))
@@ -77,7 +104,7 @@
 
 - [#28](https://github.com/unexpectedjs/unexpected-snapshot/pull/28) Split the updating and checking part into to separate plugins ([Sune Simonsen](mailto:sune@we-knowhow.dk))
 - [#27](https://github.com/unexpectedjs/unexpected-snapshot/pull/27) Testing that matching snapshots works correctly ([Sune Simonsen](mailto:sune@we-knowhow.dk))
-- [#26](https://github.com/unexpectedjs/unexpected-snapshot/pull/26) Testing snapshot inspected snapshots  ([Andreas Lind](mailto:andreaslindpetersen@gmail.com), [Sune Simonsen](mailto:sune@we-knowhow.dk))
+- [#26](https://github.com/unexpectedjs/unexpected-snapshot/pull/26) Testing snapshot inspected snapshots ([Andreas Lind](mailto:andreaslindpetersen@gmail.com), [Sune Simonsen](mailto:sune@we-knowhow.dk))
 - [#25](https://github.com/unexpectedjs/unexpected-snapshot/pull/25) Upgrade prettier to version 1.18.2 ([depfu[bot]](mailto:depfu[bot]@users.noreply.github.com))
 
 ### v0.3.1 (2019-05-25)
@@ -98,6 +125,7 @@
 - [+9 more](https://github.com/unexpectedjs/unexpected-snapshot/compare/v0.2.0...v0.3.0)
 
 ### v0.2.0
+
 #### Pull requests
 
 - [#24](https://github.com/unexpectedjs/unexpected-snapshot/pull/24) Upgrade detect-indent to version 6.0.0 ([depfu[bot]](mailto:depfu[bot]@users.noreply.github.com))
@@ -139,5 +167,4 @@
 - [Fix footgun](https://github.com/unexpectedjs/unexpected-snapshot/commit/da860ac6e215f2412ebf3ec513914dbca3da2c64) ([Andreas Lind](mailto:andreas@one.com))
 - [Whoops, add missing dependency.](https://github.com/unexpectedjs/unexpected-snapshot/commit/ac55997d96eda0f16e80f27d12dfa79c03e57345) ([Andreas Lind](mailto:andreas@one.com))
 - [Make sure that we exit with non-zero when fixpect fails due to git problems](https://github.com/unexpectedjs/unexpected-snapshot/commit/35d1e17eeaf0442a5c34bff9b8a46ab7466c145e) ([Andreas Lind](mailto:andreas@one.com))
-- [+54 more](https://github.com/unexpectedjs/unexpected-snapshot/compare/47d998ac793d41ada6dc8b10eed1c7cfbd0226d6%5E...v0.1.0)
-
+- [+54 more](https://github.com/unexpectedjs/unexpected-snapshot/compare/35d1e17eeaf0442a5c34bff9b8a46ab7466c145e...v0.1.0)
