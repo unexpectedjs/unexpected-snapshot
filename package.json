@@ -14,7 +14,6 @@
     "test": "mocha",
     "build": "./build.sh",
     "test-headless": "npm run build && karma start --single-run",
-    "test:ci": "npm run coverage && npm run test-headless",
     "coverage": "nyc --reporter=lcov --reporter=text --all -- mocha && echo google-chrome coverage/lcov-report/index.html",
     "prepublishOnly": "npm run build",
     "preversion": "offline-github-changelog --next=${npm_package_version} > CHANGELOG.md && git add CHANGELOG.md"
@@ -34,7 +33,6 @@
   },
   "devDependencies": {
     "buble": "^0.20.0",
-    "coveralls": "^3.0.2",
     "escodegen": "^2.0.0",
     "eslint-config-prettier": "^6.0.0",
     "eslint-config-standard": "^16.0.1",

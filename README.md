@@ -1,6 +1,10 @@
 ## unexpected-snapshot
 
-![Snap!](unexpected-snapshot.jpg 'Snap!')
+[![NPM version](https://badge.fury.io/js/unexpected-snapshot.svg)](http://badge.fury.io/js/unexpected-snapshot)
+[![Build Status](https://github.com/unexpectedjs/unexpected-snapshot/workflows/Tests/badge.svg)](https://github.com/unexpectedjs/unexpected-snapshot)
+[![Coverage Status](https://img.shields.io/coveralls/unexpectedjs/unexpected-snapshot.svg?style=flat)](https://coveralls.io/r/unexpectedjs/unexpected-snapshot?branch=master)
+
+![Snap!](https://raw.githubusercontent.com/unexpectedjs/unexpected-snapshot/master/unexpected-snapshot.jpg)
 
 Unexpected plugin for capturing and matching inline snapshots.
 
