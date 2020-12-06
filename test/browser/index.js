@@ -1,6 +1,7 @@
 /* global weknowhow, unexpectedSnapshot */
 
-const expect = weknowhow.expect.clone().use(unexpectedSnapshot);
+// eslint-disable-next-line no-var
+var expect = weknowhow.expect.clone().use(unexpectedSnapshot);
 
 describe('unexpected-snapshot', function () {
   describe('to equal snapshot', function () {
@@ -10,7 +11,9 @@ describe('unexpected-snapshot', function () {
 
     it('should fail with a diff', function () {
       expect(
-        () => expect('abc', 'to equal snapshot', 'def'),
+        function () {
+          expect('abc', 'to equal snapshot', 'def');
+        },
         'to throw',
         "expected 'abc' to equal snapshot 'def'\n" +
           '\n' +
@@ -37,12 +40,13 @@ describe('unexpected-snapshot', function () {
 
     it('should fail with a diff', function () {
       expect(
-        () =>
+        function () {
           expect(
             new Person('Eigil'),
             'to equal snapshot',
             "Person({ name: 'Preben' })"
-          ),
+          );
+        },
         'to throw',
         "expected Person({ name: 'Eigil' }) to equal snapshot 'Person({ name: \\'Preben\\' })'\n" +
           '\n' +

@@ -3,6 +3,10 @@ name: Tests
   push:
   pull_request:
 
+env:
+  BROWSER_STACK_ACCESS_KEY: '${{ secrets.BROWSER_STACK_ACCESS_KEY }}'
+  BROWSER_STACK_USERNAME: '${{ secrets.BROWSER_STACK_USERNAME }}'
+
 jobs:
   test:
     runs-on: ubuntu-18.04
@@ -32,6 +36,10 @@ jobs:
             target: 'lint'
           - name: 'Coverage'
             target: 'coverage'
+          - name: 'Browser - IE11'
+            target: 'test-browser-ie11'
+          - name: 'Chrome Headless'
+            target: 'test-headless'
 
     steps:
       - uses: actions/checkout@v2

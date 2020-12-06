@@ -10,10 +10,12 @@
     "unexpected-snapshot-browser.js.map"
   ],
   "scripts": {
+    "build": "./build.sh",
     "lint": "eslint . && prettier --check '**/*.{js,md}'",
     "test": "mocha",
-    "build": "./build.sh",
-    "test-headless": "npm run build && karma start --single-run",
+    "test-browser": "npm run build && karma start --single-run --browsers ${BROWSER:-ChromeHeadless}",
+    "test-browser-ie11": "BROWSER=ie11 npm run test-browser",
+    "test-headless": "npm run test-browser",
     "coverage": "nyc --reporter=lcov --reporter=text --all -- mocha && echo google-chrome coverage/lcov-report/index.html",
     "prepublishOnly": "npm run build",
     "preversion": "offline-github-changelog --next=${npm_package_version} > CHANGELOG.md && git add CHANGELOG.md"
@@ -43,6 +45,7 @@
     "eslint-plugin-standard": "^5.0.0",
     "espree": "^7.0.0",
     "karma": "^5.0.1",
+    "karma-browserstack-launcher": "^1.6.0",
     "karma-chrome-launcher": "^3.0.0",
     "karma-mocha": "^2.0.0",
     "mocha": "^8.0.1",
