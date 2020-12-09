@@ -183,13 +183,7 @@ describe('with snapshot updating on', function () {
             expect(
               ['a', 'b', 'c'],
               'to inspect as snapshot',
-              expect.unindent`
-    [
-      'a',
-      'b',
-      'c'
-    ]
-  `
+              "[ 'a', 'b', 'c' ]"
             );
           });
         }
@@ -213,13 +207,7 @@ describe('with snapshot updating on', function () {
             expect(
               ['a', 'b', 'c'],
               'to inspect as snapshot',
-              expect.unindent`
-    [
-      'a',
-      'b',
-      'c'
-    ]
-  `
+              "[ 'a', 'b', 'c' ]"
             );
           });
         }
@@ -245,13 +233,7 @@ describe('with snapshot updating on', function () {
               ['c', 'a', 'b'],
               'when sorted',
               'to inspect as snapshot',
-              expect.unindent`
-    [
-      'a',
-      'b',
-      'c'
-    ]
-  `
+              "[ 'a', 'b', 'c' ]"
             );
           });
         }
@@ -298,13 +280,7 @@ describe('with snapshot updating on', function () {
           'with unassessed to come out as',
           () => {
             it('should foo', function () {
-              assess(['a', 'b', 'c']).toInspectAsSnapshot(assess.unindent`
-    [
-      'a',
-      'b',
-      'c'
-    ]
-  `);
+              assess(['a', 'b', 'c']).toInspectAsSnapshot("[ 'a', 'b', 'c' ]");
             });
           }
         );
@@ -320,13 +296,7 @@ describe('with snapshot updating on', function () {
           'with unassessed to come out as',
           () => {
             it('should foo', function () {
-              assess(['a', 'b', 'c']).toInspectAsSnapshot(assess.unindent`
-    [
-      'a',
-      'b',
-      'c'
-    ]
-  `);
+              assess(['a', 'b', 'c']).toInspectAsSnapshot("[ 'a', 'b', 'c' ]");
             });
           }
         );
@@ -665,12 +635,7 @@ it('should foo', function() {
               expect(
                 foo,
                 'to inspect as snapshot',
-                expect.unindent`
-    {
-      bar: 123,
-      quux: [Circular]
-    }
-  `
+                '{ bar: 123, quux: [Circular] }'
               );
             });
           }
@@ -703,12 +668,7 @@ it('should foo', function() {
                 expect(
                   foo,
                   'noop to inspect as snapshot',
-                  expect.unindent`
-    {
-      bar: 123,
-      quux: [Circular]
-    }
-  `
+                  '{ bar: 123, quux: [Circular] }'
                 );
               });
             }
@@ -741,12 +701,7 @@ it('should foo', function() {
                   expect(
                     foo,
                     'noop to inspect as snapshot',
-                    expect.unindent`
-    {
-      bar: 123,
-      quux: [Circular]
-    }
-  `
+                    '{ bar: 123, quux: [Circular] }'
                   );
                 });
               }
@@ -1029,12 +984,7 @@ it('should foo', function () {
             it('should foo', function () {
               const foo = { bar: 123 };
               foo.quux = foo;
-              assess(foo).toInspectAsSnapshot(assess.unindent`
-    {
-      bar: 123,
-      quux: [Circular]
-    }
-  `);
+              assess(foo).toInspectAsSnapshot('{ bar: 123, quux: [Circular] }');
             });
           }
         );
