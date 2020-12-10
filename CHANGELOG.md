@@ -1,3 +1,20 @@
+### v1.1.1 (2020-12-10)
+
+#### Pull requests
+
+- [#78](https://github.com/unexpectedjs/unexpected-snapshot/pull/78) Make the compact inspection of objects independent of the terminal width ([Andreas Lind](mailto:andreaslindpetersen@gmail.com))
+- [#77](https://github.com/unexpectedjs/unexpected-snapshot/pull/77) Upgrade eslint-config-prettier to version 7.0.0 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+- [#76](https://github.com/unexpectedjs/unexpected-snapshot/pull/76) Upgrade eslint-plugin-standard to version 5.0.0 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+- [#75](https://github.com/unexpectedjs/unexpected-snapshot/pull/75) Upgrade prettier to version 2.2.0 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+
+#### Commits to master
+
+- [Convert var to let\/const](https://github.com/unexpectedjs/unexpected-snapshot/commit/620ce2be6e29db01b8150aec9c355b7b11a18328) ([Andreas Lind](mailto:andreaslindpetersen@gmail.com))
+- [Add IE11 testing via BrowserStack to the test matrix.](https://github.com/unexpectedjs/unexpected-snapshot/commit/560b4316408d5497a5f919a3adbb913517d71eff) ([Alex J Burke](mailto:alex@alexjeffburke.com))
+- [Switch to GitHub Actions](https://github.com/unexpectedjs/unexpected-snapshot/commit/fc0a11316801d56799c92c06583f62c6a5672dfd) ([Alex J Burke](mailto:alex@alexjeffburke.com))
+- [Avoid dev dependency on puppeteer.](https://github.com/unexpectedjs/unexpected-snapshot/commit/83efd267dcdb7d9a65adb578d2ef204e6c0ca5e5) ([Alex J Burke](mailto:alex@alexjeffburke.com))
+- [Fix test](https://github.com/unexpectedjs/unexpected-snapshot/commit/2ee14b43a1bf41c41f3599c8d7d3def1560a9b53) ([Andreas Lind](mailto:andreaslindpetersen@gmail.com))
+
 ### v1.1.0 (2020-11-19)
 
 #### Pull requests
