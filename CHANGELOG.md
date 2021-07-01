@@ -1,3 +1,18 @@
+### v1.2.0 (2021-07-01)
+
+#### Pull requests
+
+- [#95](https://github.com/unexpectedjs/unexpected-snapshot/pull/95) Upgrade espree to version 8.0.0 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+- [#92](https://github.com/unexpectedjs/unexpected-snapshot/pull/92) Upgrade eslint-plugin-mocha to version 9.0.0 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+- [#88](https://github.com/unexpectedjs/unexpected-snapshot/pull/88) Upgrade karma to version 6.1.2 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+
+#### Commits to master
+
+- [prettier --write '\*\*\/\*.js'](https://github.com/unexpectedjs/unexpected-snapshot/commit/a14dfd04690c846336c25a94e353bc844d5ffa71) ([Andreas Lind](mailto:andreas.lind@workday.com))
+- [Update prettier to version 2.3.0](https://github.com/unexpectedjs/unexpected-snapshot/commit/d7b5e3c238bfd69e98a6dc421a313bb29d4c3ebf) ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+- [Fix eslint-plugin-prettier usage](https://github.com/unexpectedjs/unexpected-snapshot/commit/bc2189f7c095ec0fc2a51ea200822c725afa8182) ([Andreas Lind](mailto:andreas.lind@workday.com))
+- [Update eslint-config-prettier to version 8.2.0](https://github.com/unexpectedjs/unexpected-snapshot/commit/2dd54d844b4ed3f391bfe6463b323c1edce9c3b9) ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+
 ### v1.1.1 (2020-12-10)
 
 #### Pull requests
