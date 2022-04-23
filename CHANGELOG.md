@@ -1,3 +1,22 @@
+### v2.0.0 (2022-04-23)
+
+#### Pull requests
+
+- [#111](https://github.com/unexpectedjs/unexpected-snapshot/pull/111) Upgrade eslint-plugin-mocha to version 10.0.1 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+- [#108](https://github.com/unexpectedjs/unexpected-snapshot/pull/108) Upgrade prettier to version 2.5.0 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+- [#104](https://github.com/unexpectedjs/unexpected-snapshot/pull/104) Upgrade eslint-plugin-promise to version 5.1.1 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+- [#101](https://github.com/unexpectedjs/unexpected-snapshot/pull/101) Upgrade espree to version 9.0.0 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+- [#100](https://github.com/unexpectedjs/unexpected-snapshot/pull/100) Upgrade prettier to version 2.4.0 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+
+#### Commits to master
+
+- [Lock eslint to 8.14.0, they might break the deep-requires in a minor or patch version](https://github.com/unexpectedjs/unexpected-snapshot/commit/95f14f89954dcf00f9ca4668f2ccece6e2005616) ([Andreas Lind](mailto:andreas.lind@workday.com))
+- [Enable node.js 16 on CI, lint with node.js 16](https://github.com/unexpectedjs/unexpected-snapshot/commit/cfa9ce80fe95d06e5d3193356fe82206a86ad188) ([Andreas Lind](mailto:andreas.lind@workday.com))
+- [Ditch node.js 10 and 12 on CI](https://github.com/unexpectedjs/unexpected-snapshot/commit/37dede0add9943f3552e9500bd4a2cbab98e6327) ([Andreas Lind](mailto:andreas.lind@workday.com))
+- [Disable the object-shorthand eslint rule in the test file, as it doesn't match how unexpected serializes objects](https://github.com/unexpectedjs/unexpected-snapshot/commit/773285ba94603cc65bff995993f13298371db03e) ([Andreas Lind](mailto:andreas.lind@workday.com))
+- [Revert "eslint --fix ."](https://github.com/unexpectedjs/unexpected-snapshot/commit/857b8d1edf35beff278bf0a95a22d3dc97ec7cef) ([Andreas Lind](mailto:andreas.lind@workday.com))
+- [+4 more](https://github.com/unexpectedjs/unexpected-snapshot/compare/v1.2.0...v2.0.0)
+
 ### v1.2.0 (2021-07-01)
 
 #### Pull requests
