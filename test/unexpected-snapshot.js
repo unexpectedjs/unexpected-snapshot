@@ -1,4 +1,4 @@
-/* eslint-disable mocha/no-nested-tests, mocha/no-identical-title */
+/* eslint-disable object-shorthand, mocha/no-nested-tests, mocha/no-identical-title */
 
 describe('with snapshot updating on', function () {
   const expect = require('unexpected').clone();
