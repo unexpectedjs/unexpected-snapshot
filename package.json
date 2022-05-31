@@ -1,6 +1,6 @@
 {
   "name": "unexpected-snapshot",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Add inline snapshotting powers to the Unexpected assertion library",
   "main": "lib/unexpected-snapshot.js",
   "browser": "unexpected-snapshot-browser.js",

@@ -1,3 +1,8 @@
+### v2.1.0 (2022-05-31)
+
+- [#124](https://github.com/unexpectedjs/unexpected-snapshot/pull/124) Support unexpected v13 ([Sune Simonsen](mailto:sune@we-knowhow.dk))
+- [#122](https://github.com/unexpectedjs/unexpected-snapshot/pull/122) Upgrade eslint to version 8.15.0 ([depfu[bot]](mailto:23717796+depfu[bot]@users.noreply.github.com))
+
 ### v2.0.0 (2022-04-23)
 
 #### Pull requests
