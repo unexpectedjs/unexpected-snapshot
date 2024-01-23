@@ -30,7 +30,7 @@ function Person(name) {
 expect(
   new Person('Eigil'),
   'to inspect as snapshot',
-  "Person({ name: 'Eigil' })"
+  "Person({ name: 'Eigil' })",
 );
 ```
 

@@ -20,7 +20,7 @@ describe('unexpected-snapshot', function () {
           '-abc\n' +
           '+def\n' +
           '\n' +
-          'Rerun the tests with UNEXPECTED_SNAPSHOT=yes in Node to update the snapshots'
+          'Rerun the tests with UNEXPECTED_SNAPSHOT=yes in Node to update the snapshots',
       );
     });
   });
@@ -34,7 +34,7 @@ describe('unexpected-snapshot', function () {
       expect(
         new Person('Eigil'),
         'to inspect as snapshot',
-        "Person({ name: 'Eigil' })"
+        "Person({ name: 'Eigil' })",
       );
     });
 
@@ -44,13 +44,13 @@ describe('unexpected-snapshot', function () {
           expect(
             new Person('Eigil'),
             'to equal snapshot',
-            "Person({ name: 'Preben' })"
+            "Person({ name: 'Preben' })",
           );
         },
         'to throw',
         "expected Person({ name: 'Eigil' }) to equal snapshot 'Person({ name: \\'Preben\\' })'\n" +
           '\n' +
-          'Rerun the tests with UNEXPECTED_SNAPSHOT=yes in Node to update the snapshots'
+          'Rerun the tests with UNEXPECTED_SNAPSHOT=yes in Node to update the snapshots',
       );
     });
   });
