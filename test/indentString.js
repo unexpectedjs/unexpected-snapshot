@@ -24,7 +24,7 @@ describe('stringSnapshot', () => {
       expect(
         indentString('foo\n  \nbar', 2),
         'to equal',
-        '\n  foo\n    \n  bar\n',
+        '\n  foo\n    \n  bar\n'
       );
     });
 

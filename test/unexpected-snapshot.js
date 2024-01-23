@@ -9,25 +9,25 @@ describe('with snapshot updating on', function () {
   const espree = require('espree');
   const preambleByType = {
     unexpected: `var expect = require('${require.resolve(
-      'unexpected',
+      'unexpected'
     )}').clone().use(require('${pathModule.resolve(
       __dirname,
       '..',
       'lib',
-      'unexpected-snapshot.js',
+      'unexpected-snapshot.js'
     )}'));\n// END PREAMBLE\n`,
     unassessed: `var assess = require('${require.resolve(
-      'unassessed',
+      'unassessed'
     )}').withUnexpectedPlugins(require('${pathModule.resolve(
       __dirname,
       '..',
       'lib',
-      'unexpected-snapshot.js',
+      'unexpected-snapshot.js'
     )}'));\n// END PREAMBLE\n`,
   };
   const tmpDir = pathModule.resolve(
     require('os').tmpdir(),
-    `unexpected-snapshot-test-${Date.now()}-${process.pid}`,
+    `unexpected-snapshot-test-${Date.now()}-${process.pid}`
   );
 
   before(async () => {
@@ -61,7 +61,7 @@ describe('with snapshot updating on', function () {
   async function writeTestToTemporaryFile(code, type = 'unexpected') {
     const tmpFileName = pathModule.resolve(
       tmpDir,
-      `unexpected-snapshot-${Math.round(10000000 * Math.random())}.js`,
+      `unexpected-snapshot-${Math.round(10000000 * Math.random())}.js`
     );
     await fs.writeFileAsync(tmpFileName, preambleByType[type] + code, 'utf-8');
     return tmpFileName;
@@ -76,14 +76,14 @@ describe('with snapshot updating on', function () {
       '..',
       'node_modules',
       '.bin',
-      'mocha',
+      'mocha'
     )} ${fileNames.join(' ')}`;
     const [err, stdout, stderr] = await expect.promise.fromNode((cb) =>
       childProcess.exec(
         testCommand,
         { env: { ...process.env, ...env } },
-        cb.bind(null, null),
-      ),
+        cb.bind(null, null)
+      )
     );
     return [err, stdout, stderr];
   }
@@ -104,10 +104,10 @@ describe('with snapshot updating on', function () {
           expect.flags['with unassessed'] ? 'unassessed' : 'unexpected'
         ];
       const output = (await fs.readFileAsync(tmpFileName, 'utf-8')).substr(
-        preamble.length,
+        preamble.length
       );
       expect(beautifyJavaScript(output), 'to equal', subject);
-    },
+    }
   );
 
   expect.addAssertion(
@@ -145,7 +145,7 @@ describe('with snapshot updating on', function () {
 
         let output = (await fs.readFileAsync(tmpFileName, 'utf-8')).replace(
           /^[\s\S]*?\/\/ END PREAMBLE\n/,
-          '',
+          ''
         );
         if (!expect.flags.exactly) {
           output = beautifyJavaScript(output);
@@ -166,7 +166,7 @@ describe('with snapshot updating on', function () {
         }
         await fs.unlinkAsync(tmpFileName);
       }
-    },
+    }
   );
 
   describe('inspect as snapshot', () => {
@@ -183,10 +183,10 @@ describe('with snapshot updating on', function () {
             expect(
               ['a', 'b', 'c'],
               'to inspect as snapshot',
-              "[ 'a', 'b', 'c' ]",
+              "[ 'a', 'b', 'c' ]"
             );
           });
-        },
+        }
       );
     });
 
@@ -197,7 +197,7 @@ describe('with snapshot updating on', function () {
             expect(
               ['a', 'b', 'c'],
               'to inspect as snapshot',
-              "['a', 'b', 'c']",
+              "['a', 'b', 'c']"
             );
           });
         },
@@ -207,10 +207,10 @@ describe('with snapshot updating on', function () {
             expect(
               ['a', 'b', 'c'],
               'to inspect as snapshot',
-              "[ 'a', 'b', 'c' ]",
+              "[ 'a', 'b', 'c' ]"
             );
           });
-        },
+        }
       );
     });
 
@@ -222,7 +222,7 @@ describe('with snapshot updating on', function () {
               ['c', 'a', 'b'],
               'when sorted',
               'to inspect as snapshot',
-              "['a', 'b', 'c']",
+              "['a', 'b', 'c']"
             );
           });
         },
@@ -233,10 +233,10 @@ describe('with snapshot updating on', function () {
               ['c', 'a', 'b'],
               'when sorted',
               'to inspect as snapshot',
-              "[ 'a', 'b', 'c' ]",
+              "[ 'a', 'b', 'c' ]"
             );
           });
-        },
+        }
       );
     });
 
@@ -249,7 +249,7 @@ describe('with snapshot updating on', function () {
                 down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } },
               },
               'to inspect as snapshot',
-              '{ down: { the: { rabbit: { hole: {} } } } }',
+              '{ down: { the: { rabbit: { hole: {} } } } }'
             );
           });
         },
@@ -261,10 +261,10 @@ describe('with snapshot updating on', function () {
                 down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } },
               },
               'to inspect as snapshot',
-              "{ down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } } }",
+              "{ down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } } }"
             );
           });
-        },
+        }
       );
     });
 
@@ -282,7 +282,7 @@ describe('with snapshot updating on', function () {
             it('should foo', function () {
               assess(['a', 'b', 'c']).toInspectAsSnapshot("[ 'a', 'b', 'c' ]");
             });
-          },
+          }
         );
       });
 
@@ -298,7 +298,7 @@ describe('with snapshot updating on', function () {
             it('should foo', function () {
               assess(['a', 'b', 'c']).toInspectAsSnapshot("[ 'a', 'b', 'c' ]");
             });
-          },
+          }
         );
       });
     });
@@ -317,7 +317,7 @@ it('should foo', function() {
 it('should foo', function() {
   expect('foo', 'to equal snapshot', 'foo');
 });
-      `,
+      `
       );
     });
 
@@ -336,7 +336,7 @@ it('should foo', function() {
 
   \`);
 });
-      `,
+      `
       );
     });
 
@@ -355,7 +355,7 @@ it('should foo', function() {
 
   \`);
 });
-      `,
+      `
       );
     });
 
@@ -371,7 +371,7 @@ it('should foo', function() {
 it('should foo', function() {
   expect('\\n foo', 'to equal snapshot', '\\n foo');
 });
-      `,
+      `
       );
     });
 
@@ -387,7 +387,7 @@ it('should foo', function() {
 it('should foo', function() {
   expect(' foo\\n', 'to equal snapshot', ' foo\\n');
 });
-      `,
+      `
       );
     });
 
@@ -411,7 +411,7 @@ it('should foo', function() {
     'foo'
   );
 });
-      `,
+      `
       );
     });
 
@@ -438,7 +438,7 @@ it('should foo', function() {
     \`
   );
 });
-      `,
+      `
       );
     });
 
@@ -458,7 +458,7 @@ it('should foo', function() {
     bar
   \`);
 });
-        `,
+        `
         );
       });
 
@@ -481,7 +481,7 @@ if (true) {
     \`);
   });
 }
-        `,
+        `
         );
       });
 
@@ -504,7 +504,7 @@ if (true) {
         \`);
     });
 }
-        `,
+        `
         );
       });
     });
@@ -523,7 +523,7 @@ it('should foo', function() {
 it('should foo', function() {
   expect('foo', 'to equal snapshot', 'foo');
 });
-      `,
+      `
       );
     });
 
@@ -539,7 +539,7 @@ it('should foo', function() {
 it('should foo', function() {
   expect('foo', 'to equal snapshot', 'foo');
 });
-      `,
+      `
       );
     });
 
@@ -559,7 +559,7 @@ it('should foo', function() {
     bar
   \`);
 });
-        `,
+        `
       );
     });
 
@@ -581,7 +581,7 @@ it('should foo', function() {
     bar
   \`);
 });
-        `,
+        `
       );
     });
 
@@ -597,7 +597,7 @@ it('should foo', function() {
           it('should foo', function () {
             expect({ foo: 'bar' }, 'to equal snapshot', { foo: 'bar' });
           });
-        },
+        }
       );
     });
 
@@ -613,7 +613,7 @@ it('should foo', function() {
           it('should foo', function () {
             expect([123, 'abc'], 'to equal snapshot', [123, 'abc']);
           });
-        },
+        }
       );
     });
 
@@ -635,10 +635,10 @@ it('should foo', function() {
               expect(
                 foo,
                 'to inspect as snapshot',
-                '{ bar: 123, quux: [Circular] }',
+                '{ bar: 123, quux: [Circular] }'
               );
             });
-          },
+          }
         );
       });
 
@@ -647,7 +647,7 @@ it('should foo', function() {
           return expect(
             () => {
               expect.addAssertion('<any> noop <assertion>', (expect) =>
-                expect.shift(),
+                expect.shift()
               );
 
               it('should foo', function () {
@@ -659,7 +659,7 @@ it('should foo', function() {
             'to come out as',
             function () {
               expect.addAssertion('<any> noop <assertion>', (expect) =>
-                expect.shift(),
+                expect.shift()
               );
 
               it('should foo', function () {
@@ -668,10 +668,10 @@ it('should foo', function() {
                 expect(
                   foo,
                   'noop to inspect as snapshot',
-                  '{ bar: 123, quux: [Circular] }',
+                  '{ bar: 123, quux: [Circular] }'
                 );
               });
-            },
+            }
           );
         });
 
@@ -680,7 +680,7 @@ it('should foo', function() {
             return expect(
               () => {
                 expect.addAssertion('<any> noop <assertion>', (expect) =>
-                  expect.shift(),
+                  expect.shift()
                 );
 
                 it('should foo', function () {
@@ -692,7 +692,7 @@ it('should foo', function() {
               'to come out as',
               function () {
                 expect.addAssertion('<any> noop <assertion>', (expect) =>
-                  expect.shift(),
+                  expect.shift()
                 );
 
                 it('should foo', function () {
@@ -701,10 +701,10 @@ it('should foo', function() {
                   expect(
                     foo,
                     'noop to inspect as snapshot',
-                    '{ bar: 123, quux: [Circular] }',
+                    '{ bar: 123, quux: [Circular] }'
                   );
                 });
-              },
+              }
             );
           });
         });
@@ -730,10 +730,10 @@ it('should foo', function() {
             expect(
               new Person('Eigil'),
               'to inspect as snapshot',
-              "Person({ name: 'Eigil' })",
+              "Person({ name: 'Eigil' })"
             );
           });
-        },
+        }
       );
     });
 
@@ -752,7 +752,7 @@ it('should foo', function() {
                 number: 123.456,
                 regexp: /abc(?:)/gim,
               },
-              'to equal snapshot',
+              'to equal snapshot'
             );
           });
         },
@@ -780,10 +780,10 @@ it('should foo', function() {
                 Infinity: Infinity,
                 number: 123.456,
                 regexp: /abc(?:)/gim,
-              },
+              }
             );
           });
-        },
+        }
       );
     });
 
@@ -806,7 +806,7 @@ it('should foo', function() {
               'c',
             ]);
           });
-        },
+        }
       );
     });
 
@@ -819,7 +819,7 @@ it('should foo', function() {
                 down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } },
               },
               'to equal snapshot',
-              { down: { the: { rabbit: { hole: {} } } } },
+              { down: { the: { rabbit: { hole: {} } } } }
             );
           });
         },
@@ -833,10 +833,10 @@ it('should foo', function() {
               'to equal snapshot',
               {
                 down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } },
-              },
+              }
             );
           });
-        },
+        }
       );
     });
 
@@ -857,7 +857,7 @@ it('should foo', function() {
                 bar: expect.it('to equal snapshot', 'foo'),
               });
             });
-          },
+          }
         );
       });
 
@@ -879,7 +879,7 @@ it('should foo', function() {
                 }),
               });
             });
-          },
+          }
         );
       });
     });
@@ -900,12 +900,12 @@ it('should foo', function() {
           UNEXPECTED_SNAPSHOT: 'on',
         });
         const fixedSrcs = await Promise.all(
-          tmpFileNames.map((fileName) => fs.readFileAsync(fileName, 'utf-8')),
+          tmpFileNames.map((fileName) => fs.readFileAsync(fileName, 'utf-8'))
         );
         expect(
           fixedSrcs,
           'to have items satisfying to contain',
-          `expect("foo", "to equal snapshot", "foo");`,
+          `expect("foo", "to equal snapshot", "foo");`
         );
       });
     });
@@ -927,7 +927,7 @@ it('should foo', function() {
 'to equal snapshot', 'foo'
   );
 });
-`,
+`
         );
       });
 
@@ -946,7 +946,7 @@ it('should foo', function() {
 it('should foo', function () {
   expect('foo', 'to equal snapshot', 'foo');
 });
-`,
+`
         );
       });
     });
@@ -966,7 +966,7 @@ it('should foo', function () {
             it('should foo', function () {
               assess('foo').toEqualSnapshot('foo');
             });
-          },
+          }
         );
       });
 
@@ -986,7 +986,7 @@ it('should foo', function () {
               foo.quux = foo;
               assess(foo).toInspectAsSnapshot('{ bar: 123, quux: [Circular] }');
             });
-          },
+          }
         );
       });
 
@@ -1006,7 +1006,7 @@ it('should foo', function() {
     baz
   \`);
 });
-`,
+`
         );
       });
     });
@@ -1024,7 +1024,7 @@ it('should foo', function() {
             it('should foo', function () {
               assess('foo').toEqualSnapshot('foo');
             });
-          },
+          }
         );
       });
     });
@@ -1043,7 +1043,7 @@ describe('with snapshot updating off', function () {
         'to throw',
         'expected 42 to equal snapshot\n' +
           '\n' +
-          'Rerun the tests with UNEXPECTED_SNAPSHOT=yes in Node to update the snapshots',
+          'Rerun the tests with UNEXPECTED_SNAPSHOT=yes in Node to update the snapshots'
       );
     });
 
@@ -1061,7 +1061,7 @@ describe('with snapshot updating off', function () {
         'to throw',
         'expected 42 to equal snapshot 666\n' +
           '\n' +
-          'Rerun the tests with UNEXPECTED_SNAPSHOT=yes in Node to update the snapshots',
+          'Rerun the tests with UNEXPECTED_SNAPSHOT=yes in Node to update the snapshots'
       );
     });
 
@@ -1070,7 +1070,7 @@ describe('with snapshot updating off', function () {
         expect(
           { down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } } },
           'to equal snapshot',
-          { down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } } },
+          { down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } } }
         );
       }, 'not to throw');
     });
@@ -1085,7 +1085,7 @@ describe('with snapshot updating off', function () {
         'to throw',
         'expected 42 to inspect as snapshot\n' +
           '\n' +
-          'Rerun the tests with UNEXPECTED_SNAPSHOT=yes in Node to update the snapshots',
+          'Rerun the tests with UNEXPECTED_SNAPSHOT=yes in Node to update the snapshots'
       );
     });
 
@@ -1106,7 +1106,7 @@ describe('with snapshot updating off', function () {
           '-42\n' +
           '+666\n' +
           '\n' +
-          'Rerun the tests with UNEXPECTED_SNAPSHOT=yes in Node to update the snapshots',
+          'Rerun the tests with UNEXPECTED_SNAPSHOT=yes in Node to update the snapshots'
       );
     });
 
@@ -1115,7 +1115,7 @@ describe('with snapshot updating off', function () {
         expect(
           { down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } } },
           'to inspect as snapshot',
-          "{ down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } } }",
+          "{ down: { the: { rabbit: { hole: { you: { find: 'Alice' } } } } } }"
         );
       }, 'not to throw');
     });
